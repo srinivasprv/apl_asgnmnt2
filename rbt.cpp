@@ -1,22 +1,20 @@
 #include "dict.h"
 
-template <class type1>
-rbt<type1>::rbt()
+rbt::rbt()
 {
 	head->parent = NULL;
 	tail = NULL;
 	head = tail;
 }
 
-template <class type1>
-typename rbt<type1>::node* rbt<type1>::search_tree(type1 value)
+node* rbt::search_tree(int value)
 {
 	node *pres;
 
 	pres = head;
-	while((pres!=NULL)&&(!(pres->operator==(value))))
+	while((pres!=NULL)&&(!(pres->element==(value))))
 	{
-		if(pres->operator>(value))
+		if(pres->element>(value))
 			pres = pres->left;
 		else
 			pres = pres->right;
@@ -24,8 +22,7 @@ typename rbt<type1>::node* rbt<type1>::search_tree(type1 value)
 	return pres;
 }
 
-template <class type1>
-typename rbt<type1>::node* rbt<type1>::find_minimum(node *mynode)
+node* rbt::find_minimum(node *mynode)
 {
 	node *pres;
 	pres = mynode;
@@ -35,8 +32,7 @@ typename rbt<type1>::node* rbt<type1>::find_minimum(node *mynode)
 	return pres;
 }
 
-template <class type1>
-typename rbt<type1>::node* rbt<type1>::find_maximum(node *mynode)
+node* rbt::find_maximum(node *mynode)
 {
 	node *pres;
 	pres = mynode;
@@ -46,8 +42,7 @@ typename rbt<type1>::node* rbt<type1>::find_maximum(node *mynode)
 	return pres;
 }
 
-template <class type1>
-typename rbt<type1>::node* rbt<type1>::find_successor(node *mynode)
+node* rbt::find_successor(node *mynode)
 {
 	node *pres,*parent;
 	pres = mynode;
@@ -64,8 +59,7 @@ typename rbt<type1>::node* rbt<type1>::find_successor(node *mynode)
 	return parent;
 }
 
-template <class type1>
-typename rbt<type1>::node* rbt<type1>::left_rotation(node *mynode)
+node* rbt::left_rotation(node *mynode)
 {
 	node *pres,*rightchild;
 
@@ -85,8 +79,7 @@ typename rbt<type1>::node* rbt<type1>::left_rotation(node *mynode)
 	pres->parent = rightchild;
 }
 
-template <class type1>
-typename rbt<type1>::node* rbt<type1>::right_rotation(node *mynode)
+node* rbt::right_rotation(node *mynode)
 {
 	node *pres,*leftchild;
 
@@ -106,8 +99,7 @@ typename rbt<type1>::node* rbt<type1>::right_rotation(node *mynode)
 	pres->parent = leftchild;
 }
 
-template <class type1>
-void rbt<type1>::insert_adjust(node *mynode)
+void rbt::insert_adjust(node *mynode)
 {
 	node *pres,*uncle;
 
@@ -156,13 +148,12 @@ void rbt<type1>::insert_adjust(node *mynode)
 	head->color = 0;
 }
 
-template <class type1>
-void rbt<type1>::insert(type1 value)
+void rbt::insert(int value)
 {
 	node *pres,*prev,*new_leaf;
 	
 	new_leaf = new node();
-	new_leaf->operator=(value);
+	new_leaf->element=(value);
 	new_leaf->left = head->right = tail;
 	new_leaf->color = 1;
 
@@ -171,7 +162,7 @@ void rbt<type1>::insert(type1 value)
 	while(pres != tail)
 	{
 		prev = pres;
-		if(pres->operator>(value))
+		if(pres->element>(value))
 			pres = pres->left;
 		else
 			pres = pres->right;
@@ -179,15 +170,14 @@ void rbt<type1>::insert(type1 value)
 	new_leaf->parent = prev;
 	if(prev == tail)
 		head = new_leaf;
-	else if(prev->operator>(value))
+	else if(prev->element>(value))
 		prev->left = new_leaf;
 	else
 		prev->right = new_leaf;
 	insert_adjust(new_leaf);
 }
 
-template <class type1>
-void rbt<type1>::replace(node *a,node *b)
+void rbt::replace(node *a,node *b)
 {
 	if(a->parent==tail)
 		head = b;
@@ -198,8 +188,7 @@ void rbt<type1>::replace(node *a,node *b)
 	b->parent = a->parent;
 }
 
-template <class type1>
-void rbt<type1>::delete_adjust(node *mynode)
+void rbt::delete_adjust(node *mynode)
 {
 	node *pres,*brother;
 
@@ -266,8 +255,7 @@ void rbt<type1>::delete_adjust(node *mynode)
 	pres->color = 0;
 }
 
-template <class type1>
-void rbt<type1>::delete_element(type1 value)
+void rbt::delete_element(int value)
 {
 	node *pres,*prev,*child_node,*delete_node;
 	bool flag;

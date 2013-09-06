@@ -13,7 +13,7 @@ int main(int argc,char *argv[])
 	char time_input_file[2000],time_output_file[2000];
 	bool bst_flag;
 	int read_element;
-	dict<int> *obj;
+	dict *obj;
 
 	//usage
 	if((argc!=3)||(argc!=4)||(argc !=6)||(argc!=7))
@@ -72,10 +72,10 @@ int main(int argc,char *argv[])
 	}
 
 	if(bst_flag)
-		obj = new bst<int>();
+		obj = new bst();
 //		obj = new bst();
 	else
-		obj = new rbt<int>();
+		obj = new rbt();
 	//open input file if file exists
 	if((fp= fopen(input_file,"r"))==NULL)
 	{
