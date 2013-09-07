@@ -304,3 +304,12 @@ void rbt::delete_element(int value)
 		
 	delete delete_node;
 }
+
+bool rbt::search(int value)
+{
+	return (search_tree(value) != NULL);
+}
+
+void rbt::clear()
+{
+}

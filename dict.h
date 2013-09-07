@@ -12,22 +12,22 @@ class dict
 		virtual void delete_element(int value)=0;
 		virtual void clear()=0;
 };
-class node
+class bst_node
 {
 	public:
 		int element;
-		node *parent,*left,*right;
+		bst_node *parent,*left,*right;
 };
 class bst :public dict
 {
 	public:
 		bst();
-		node *head;
-		node* search_tree(int value);
-		node* find_minimum(node *value);
-		node* find_maximum(node *value);
-		node* find_successor(node *value);
-		void replace(node *a,node *b);
+		bst_node *head;
+		bst_node* search_tree(int value);
+		bst_node* find_minimum(bst_node *value);
+		bst_node* find_maximum(bst_node *value);
+		bst_node* find_successor(bst_node *value);
+		void replace(bst_node *a,bst_node *b);
 		bool search(int value);
 		void insert(int value);
 		void delete_element(int value);

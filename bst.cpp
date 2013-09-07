@@ -6,9 +6,9 @@ bst::bst()
 	head->parent = NULL;
 }
 
-node* bst::search_tree(int value)
+bst_node* bst::search_tree(int value)
 {
-	node *pres;
+	bst_node *pres;
 
 	pres = head;
 	while((pres!=NULL)&&(!(pres->element==(value))))
@@ -21,9 +21,9 @@ node* bst::search_tree(int value)
 	return pres;
 }
 
-node* bst::find_minimum(node *node)
+bst_node* bst::find_minimum(bst_node *node)
 {
-	node *pres;
+	bst_node *pres;
 	pres = node;
 
 	while((pres->left!=NULL))
@@ -31,9 +31,9 @@ node* bst::find_minimum(node *node)
 	return pres;
 }
 
-node* bst::find_maximum(node *node)
+bst_node* bst::find_maximum(bst_node *node)
 {
-	node *pres;
+	bst_node *pres;
 	pres = node;
 
 	while((pres->right!=NULL))
@@ -41,9 +41,9 @@ node* bst::find_maximum(node *node)
 	return pres;
 }
 
-node* bst::find_successor(node *node)
+bst_node* bst::find_successor(bst_node *node)
 {
-	node *pres,*parent;
+	bst_node *pres,*parent;
 	pres = node;
 
 	if(pres->right !=NULL)
@@ -60,9 +60,9 @@ node* bst::find_successor(node *node)
 
 void bst::insert(int value)
 {
-	node *pres,*prev,*new_leaf;
+	bst_node *pres,*prev,*new_leaf;
 	
-	new_leaf = new node();
+	new_leaf = new bst_node();
 	new_leaf->element=(value);
 	new_leaf->left = head->right = NULL;
 
@@ -85,7 +85,7 @@ void bst::insert(int value)
 		prev->right = new_leaf;
 }
 
-void bst::replace(node *a,node *b)
+void bst::replace(bst_node *a,bst_node *b)
 {
 	if(a->parent==NULL)
 		head = b;
@@ -99,7 +99,7 @@ void bst::replace(node *a,node *b)
 
 void bst::delete_element(int value)
 {
-	node *pres,*prev,*child_node,*delete_node;
+	bst_node *pres,*prev,*child_node,*delete_node;
 	bool flag;
 
 	delete_node = search_tree(value);
@@ -127,4 +127,14 @@ void bst::delete_element(int value)
 		pres->left->parent = pres;
 	}
 	delete delete_node;
+}
+
+bool bst::search(int value)
+{
+	return (search_tree(value) != NULL);
+}
+
+void bst::clear()
+{
+	
 }
