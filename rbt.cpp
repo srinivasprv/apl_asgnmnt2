@@ -23,7 +23,7 @@ node* rbt::search_tree(int value)
 	node *pres;
 
 	pres = head;
-	while((pres!=NULL)&&(!(pres->element==(value))))
+	while((pres!=tail/*NULL*/)&&(!(pres->element==(value))))
 	{
 		if(pres->element>(value))
 			pres = pres->left;
@@ -38,7 +38,7 @@ node* rbt::find_minimum(node *mynode)
 	node *pres;
 	pres = mynode;
 
-	while((pres->left!=NULL))
+	while((pres->left!=tail))//NULL))
 		pres = pres->left;
 	return pres;
 }
@@ -48,7 +48,7 @@ node* rbt::find_maximum(node *mynode)
 	node *pres;
 	pres = mynode;
 
-	while((pres->right!=NULL))
+	while((pres->right!=tail))//NULL))
 		pres = pres->right;
 	return pres;
 }
@@ -58,11 +58,11 @@ node* rbt::find_successor(node *mynode)
 	node *pres,*parent;
 	pres = mynode;
 
-	if(pres->right !=NULL)
+	if(pres->right !=tail)//NULL)
 		return find_minimum(pres->right);
 
 	parent = pres;
-	while((pres!=NULL)&&(pres == parent->right))
+	while((pres!=tail/*NULL*/)&&(pres == parent->right))
 	{
 		pres = parent;
 		parent = parent->parent;
@@ -77,10 +77,10 @@ node* rbt::left_rotation(node *mynode)
 	pres = mynode;
 	rightchild = pres->right;
 	pres->right = rightchild->left;
-	if(rightchild->left != NULL)
+	if(rightchild->left != tail)//null
 		rightchild->left->parent = pres;
 	rightchild->parent = pres->parent;
-	if(pres->parent == NULL)
+	if(pres->parent == tail)//NULL)
 		head = rightchild;
 	else if(pres == pres->parent->left)
 		pres->parent->left = rightchild;
@@ -97,10 +97,10 @@ node* rbt::right_rotation(node *mynode)
 	pres = mynode;
 	leftchild = pres->left;
 	pres->left = leftchild->right;
-	if(leftchild->right != NULL)
+	if(leftchild->right != tail)//NULL)
 		leftchild->right->parent = pres;
 	leftchild->parent = pres->parent;
-	if(pres->parent == NULL)
+	if(pres->parent == tail)//NULL)
 		head = leftchild;
 	else if(pres == pres->parent->left)
 		pres->parent->left = leftchild;
@@ -127,14 +127,16 @@ void rbt::insert_adjust(node *mynode)
 				pres->parent->parent->color = 1;
 				pres = pres->parent->parent;
 			}
-			else if(pres == pres->parent->right)
-			{
-				pres = pres->parent;
-				left_rotation(pres->parent->parent);
+			else{
+				if(pres == pres->parent->right)
+				{
+					pres = pres->parent;
+					left_rotation(pres->parent->parent);
+				}
+				pres->parent->color = 0;
+				pres->parent->parent->color = 1;
+				right_rotation(pres->parent->parent);
 			}
-			pres->parent->color = 0;
-			pres->parent->parent->color = 1;
-			right_rotation(pres->parent->parent);
 		}
 		else
 		{
@@ -146,14 +148,17 @@ void rbt::insert_adjust(node *mynode)
 				pres->parent->parent->color = 1;
 				pres = pres->parent->parent;
 			}
-			else if(pres == pres->parent->left)
+			else
 			{
-				pres = pres->parent;
-				right_rotation(pres->parent->parent);
+				 if(pres == pres->parent->left)
+				{
+					pres = pres->parent;
+					right_rotation(pres->parent->parent);
+				}
+				pres->parent->color = 0;
+				pres->parent->parent->color = 1;
+				left_rotation(pres->parent->parent);
 			}
-			pres->parent->color = 0;
-			pres->parent->parent->color = 1;
-			left_rotation(pres->parent->parent);
 		}
 	}
 	head->color = 0;
@@ -185,7 +190,7 @@ void rbt::insert(int value)
 	else if(prev->element>(value))
 		prev->left = new_leaf;
 	else
-		prev->right = new_leaf;printf("%d\n",value);
+		prev->right = new_leaf;//printf("%d\n",value);
 	insert_adjust(new_leaf);
 }
 
@@ -286,7 +291,7 @@ void rbt::delete_element(int value)
 		child_node = delete_node->right;
 		replace(delete_node,delete_node->right);
 	}
-	else if(delete_node->right==NULL)
+	else if(delete_node->right==tail)//NULL)
 	{
 		child_node = delete_node->left;
 		replace(delete_node,delete_node->left);
@@ -319,12 +324,24 @@ void rbt::delete_element(int value)
 
 bool rbt::search(int value)
 {
-	return (search_tree(value) != NULL);
+	return (search_tree(value) != tail);//NULL);
 }
 
 void rbt::display()
 {
+        pio(head);
+        printf("\n");
 }
+
+void rbt::pio( node *ptr )//print inorder from a node
+{
+        if( ptr->left != tail )
+        pio( ptr->left );
+        printf("%d %d,",ptr->element,ptr->color);
+        if( ptr->right != tail )
+        pio( ptr->right );
+}
+
 
 void rbt::clear()
 {

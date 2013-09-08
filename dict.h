@@ -51,6 +51,7 @@ class rbt :public dict
 		node *tail;
 		node* search_tree(int value);
 		node* find_minimum(node *value);
+		void pio(node *ptr);
 		node* find_maximum(node *value);
 		node* find_successor(node *value);
 		node* left_rotation(node *mynode);

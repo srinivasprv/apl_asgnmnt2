@@ -86,7 +86,7 @@ int main(int argc,char *argv[])
 
 	// if read is successful read the elements and insert in tree
 	while((r=fscanf(fp,"%d ",&read_element))!=EOF){
-		obj->insert(read_element);
+		obj->insert(read_element);//obj->display();printf("\n");
 	}
 	fclose(fp);
 
@@ -94,10 +94,10 @@ int main(int argc,char *argv[])
 
 	if(obj->search(19)) printf("found\n");
 
-	int del = 0;
-	scanf("%d",&del);
-	obj->delete_element(del);
-	obj->display();
+//	int del = 0;
+//	scanf("%d",&del);
+//	obj->delete_element(del);
+//	obj->display();
 
 	return 0;
 }
