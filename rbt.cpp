@@ -1,10 +1,21 @@
 #include "dict.h"
 
-rbt::rbt()
+/*rbt::rbt()
 {
 	head->parent = NULL;
 	tail = NULL;
 	head = tail;
+}*/
+
+rbt::rbt()
+{
+	tail = new node;
+	tail->color = 0;
+//	tail->element = 1000000000000000000;
+	tail->left = NULL;
+	tail->right = NULL;
+	head = tail;
+	head->parent = tail;
 }
 
 node* rbt::search_tree(int value)
@@ -154,7 +165,8 @@ void rbt::insert(int value)
 	
 	new_leaf = new node();
 	new_leaf->element=(value);
-	new_leaf->left = head->right = tail;
+	//new_leaf->left = head->right = tail;
+	new_leaf->left = new_leaf->right = tail;
 	new_leaf->color = 1;
 
 	pres = head;
@@ -173,7 +185,7 @@ void rbt::insert(int value)
 	else if(prev->element>(value))
 		prev->left = new_leaf;
 	else
-		prev->right = new_leaf;
+		prev->right = new_leaf;printf("%d\n",value);
 	insert_adjust(new_leaf);
 }
 
