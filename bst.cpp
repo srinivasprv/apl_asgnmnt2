@@ -118,7 +118,7 @@ void bst::delete_element(int value)
 	else
 	{
 		pres = find_minimum(delete_node->right);
-		if(pres->parent == NULL)
+		if(pres->parent != delete_node)//pres->parent == NULL
 		{
 			replace(pres,pres->right);
 			pres->right = delete_node->right;
