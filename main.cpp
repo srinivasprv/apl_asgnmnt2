@@ -16,7 +16,7 @@ int main(int argc,char *argv[])
 	dict *obj;
 
 	//usage
-	if((argc!=3)||(argc!=4)||(argc !=6)||(argc!=7))
+	if((argc!=3)&&(argc!=4)&&(argc !=6)&&(argc!=7))
 	{
 		print_usage();
 		exit(0);
@@ -29,8 +29,8 @@ int main(int argc,char *argv[])
 		strcpy(output_file,argv[2]);
 	}
 	else if(argc == 4)
-	{
-		if(strcpy(argv[1],"-bst"))
+	{	
+		if(strcmp(argv[1],"-bst") != 0)//strcpy->strcmp
 		{
 			print_usage();
 			exit(0);
@@ -59,6 +59,7 @@ int main(int argc,char *argv[])
 			print_usage();
 			exit(0);
 		}
+	
 		if(strcpy(argv[4],"-t"))
 		{
 			print_usage();
@@ -84,9 +85,14 @@ int main(int argc,char *argv[])
 	}
 
 	// if read is successful read the elements and insert in tree
-	while((r=fscanf(fp,"%d ",&read_element))!=EOF)
+	while((r=fscanf(fp,"%d ",&read_element))!=EOF){
 		obj->insert(read_element);
+	}
 	fclose(fp);
+
+	obj->display();
+
+	if(obj->search(19)) printf("found\n");;
 
 	return 0;
 }

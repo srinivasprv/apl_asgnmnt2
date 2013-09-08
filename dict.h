@@ -11,6 +11,7 @@ class dict
 		virtual void insert(int value)=0;
 		virtual void delete_element(int value)=0;
 		virtual void clear()=0;
+		virtual void display()=0;
 };
 class bst_node
 {
@@ -24,6 +25,7 @@ class bst :public dict
 		bst();
 		bst_node *head;
 		bst_node* search_tree(int value);
+		void pio(bst_node *ptr);
 		bst_node* find_minimum(bst_node *value);
 		bst_node* find_maximum(bst_node *value);
 		bst_node* find_successor(bst_node *value);
@@ -32,6 +34,7 @@ class bst :public dict
 		void insert(int value);
 		void delete_element(int value);
 		void clear();
+		void display();
 };
 class node
 {
@@ -59,5 +62,6 @@ class rbt :public dict
 		void insert(int value);
 		void delete_element(int value);
 		void clear();
+		void display();
 };
 #endif

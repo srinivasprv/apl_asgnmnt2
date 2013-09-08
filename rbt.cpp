@@ -310,6 +310,10 @@ bool rbt::search(int value)
 	return (search_tree(value) != NULL);
 }
 
+void rbt::display()
+{
+}
+
 void rbt::clear()
 {
 }

@@ -3,7 +3,7 @@
 bst::bst()
 {
 	head = NULL;
-	head->parent = NULL;
+	//head->parent = NULL;
 }
 
 bst_node* bst::search_tree(int value)
@@ -59,19 +59,21 @@ bst_node* bst::find_successor(bst_node *node)
 }
 
 void bst::insert(int value)
-{
+{//if(head!=NULL)printf("insert %d\n",head->element);
 	bst_node *pres,*prev,*new_leaf;
 	
 	new_leaf = new bst_node();
-	new_leaf->element=(value);
-	new_leaf->left = head->right = NULL;
+	new_leaf->element=value;
+	new_leaf->left = NULL;
+	new_leaf->right = NULL;//head->new_leaf
 
+//	printf("insert2");
 	prev = NULL;
 	pres = head;
-	if(pres != NULL)
+	while(pres != NULL)//if->while
 	{
-		pres = prev;
-		if(pres->element>(value))
+		prev = pres;//pres=prev
+		if((pres->element)>(value))//paranthesis
 			pres = pres->left;
 		else
 			pres = pres->right;
@@ -79,7 +81,7 @@ void bst::insert(int value)
 	new_leaf->parent = prev;
 	if(prev == NULL)
 		head = new_leaf;
-	else if(prev->element>(value))
+	else if((prev->element)>(value))//paranthesis)
 		prev->left = new_leaf;
 	else
 		prev->right = new_leaf;
@@ -132,6 +134,21 @@ void bst::delete_element(int value)
 bool bst::search(int value)
 {
 	return (search_tree(value) != NULL);
+}
+
+void bst::display()
+{
+	pio(head);
+	printf("\n");
+}
+
+void bst::pio( bst_node *ptr )//print inorder from a node
+{
+	if( ptr->left != NULL )
+	pio( ptr->left );
+	printf("%d ,",ptr->element);
+	if( ptr->right != NULL )
+	pio( ptr->right );
 }
 
 void bst::clear()
