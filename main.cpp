@@ -94,10 +94,10 @@ int main(int argc,char *argv[])
 
 	if(obj->search(19)) printf("found\n");
 
-//	int del = 0;
-//	scanf("%d",&del);
-//	obj->delete_element(del);
-//	obj->display();
+	int del = 0;
+	scanf("%d",&del);
+	obj->delete_element(del);
+	obj->display();
 
 	return 0;
 }

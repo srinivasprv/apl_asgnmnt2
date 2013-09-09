@@ -227,18 +227,21 @@ void rbt::delete_adjust(node *mynode)
 				brother->color = 1;
 				pres = pres->parent;
 			}
-			else if(brother->right->color == 0)
+			else
 			{
-				brother->left->color = 0;
-				brother->color = 1;
-				right_rotation(brother);
-				brother = pres->parent->right;
+				if(brother->right->color == 0)
+				{
+					brother->left->color = 0;
+					brother->color = 1;
+					right_rotation(brother);
+					brother = pres->parent->right;
+				}
+				brother->color = pres->parent->color;
+				pres->parent->color = 0;
+				brother->right->color = 0;
+				left_rotation(pres->parent);
+				pres = head;
 			}
-			brother->color = pres->parent->color;
-			pres->parent->color = 0;
-			brother->right->color = 0;
-			left_rotation(pres->parent);
-			pres = head;
 		}
 		else
 		{
@@ -255,18 +258,21 @@ void rbt::delete_adjust(node *mynode)
 				brother->color = 1;
 				pres = pres->parent;
 			}
-			else if(brother->left->color == 0)
+			else
 			{
+				if(brother->left->color == 0)
+				{
+					brother->right->color = 0;
+					brother->color = 1;
+					left_rotation(brother);
+					brother = pres->parent->right;
+				}
+				brother->color = pres->parent->color;
+				pres->parent->color = 0;
 				brother->right->color = 0;
-				brother->color = 1;
-				left_rotation(brother);
-				brother = pres->parent->right;
+				right_rotation(pres->parent);
+				pres = head;
 			}
-			brother->color = pres->parent->color;
-			pres->parent->color = 0;
-			brother->right->color = 0;
-			right_rotation(pres->parent);
-			pres = head;
 		}
 	}
 	pres->color = 0;
