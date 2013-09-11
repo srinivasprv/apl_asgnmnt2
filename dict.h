@@ -1,6 +1,6 @@
 /**
 *       @file dict.h
-*       @brief Header file containing prototypes for classes bst, rbt.
+*       @brief Header file containing prototypes for classes dict, bst, rbt.
 *
 *       @author Anil Kumar Chilli, Praveen Srinivas
 *
@@ -19,9 +19,9 @@
 class dict
 {
 	public:
-		///search and return whether elment exists or no
+		///search and return yes or no whether elment exists or not
 		virtual bool search(int value)=0;
-		///inserct element into dictionary
+		///insert element into dictionary
 		virtual void insert(int value)=0;
 		///delete element from dictianary
 		virtual void delete_element(int value)=0;
@@ -29,6 +29,14 @@ class dict
 		virtual void clear()=0;
 		///Displays the dictinary in ascending order
 		virtual void display()=0;
+		///Populate the dictinary with initial set
+		void PopulateDictionary(char *ipfile);
+		///search the dictinary with initial set
+		void LocateInDictionary(char *ipfile);
+		///Populate the dictinary with initial set
+		void PopulateDictionary(char *ipfile,char* timefileinsert);
+		///search the dictinary with initial set
+		void LocateInDictionary(char *ipfile,char* timefileinsert);
 };
 
 /**
@@ -62,6 +70,7 @@ class bst :public dict
 		void delete_element(int value);
 		void clear();
 		void display();
+		void clear_pot(bst_node *ptr);
 };
 
 /**
@@ -102,5 +111,6 @@ class rbt :public dict
 		void delete_element(int value);
 		void clear();
 		void display();
+		void clear_pot(node *ptr);
 };
 #endif

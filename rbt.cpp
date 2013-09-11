@@ -356,7 +356,17 @@ void rbt::pio( node *ptr )//print inorder from a node
         pio( ptr->right );
 }
 
-
 void rbt::clear()
 {
+	clear_pot(head);
+	head = tail;
+}
+
+void rbt::clear_pot(node *ptr)
+{
+	if(ptr->left!=NULL)
+		clear_pot(ptr->left);
+	if(ptr->right!=NULL)
+		clear_pot(ptr->right);
+	delete ptr;
 }

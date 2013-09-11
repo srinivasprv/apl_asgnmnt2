@@ -208,13 +208,23 @@ void bst::display()
 void bst::pio( bst_node *ptr )//print inorder from a node
 {
 	if( ptr->left != NULL )
-	pio( ptr->left );
+		pio( ptr->left );
 	printf("%d ,",ptr->element);
 	if( ptr->right != NULL )
-	pio( ptr->right );
+		pio( ptr->right );
 }
 
 void bst::clear()
 {
-	
+	clear_pot(head);
+	head = NULL;
+}
+
+void bst::clear_pot( bst_node *ptr )//clearing by postorder traversal
+{
+	if( ptr->left != NULL )
+		clear_pot( ptr->left );
+	if( ptr->right != NULL )
+		clear_pot( ptr->right );
+	delete ptr;
 }
