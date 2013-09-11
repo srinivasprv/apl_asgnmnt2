@@ -1,11 +1,29 @@
+/**
+*       @file bst.cpp
+*       @brief Contains Definitions of methods of class bst.
+*
+*       @author Anil Kumar Chilli, Praveen Srinivas
+*
+*/
+
 #include "dict.h"
 
+/**
+*	Constructor initialises root or head
+*	@param 
+*/
 bst::bst()
 {
 	head = NULL;
 	//head->parent = NULL;
 }
 
+/**
+*	This method searches the tree
+*	@param value to be searched
+*	@return A pointer to node if exists
+*		NULL o/w.
+*/
 bst_node* bst::search_tree(int value)
 {
 	bst_node *pres;
@@ -21,6 +39,12 @@ bst_node* bst::search_tree(int value)
 	return pres;
 }
 
+/**
+*	Finds the least element of the sub-tree
+*	rooted at node.
+*	@param Pointer to the root of sub-tree
+*	@return pointer to the node with least value
+*/
 bst_node* bst::find_minimum(bst_node *node)
 {
 	bst_node *pres;
@@ -31,6 +55,12 @@ bst_node* bst::find_minimum(bst_node *node)
 	return pres;
 }
 
+/**
+*       Finds the largest element of the sub-tree
+*       rooted at node.
+*       @param Pointer to the root of sub-tree.
+*       @return pointer to the node with largest value.
+*/
 bst_node* bst::find_maximum(bst_node *node)
 {
 	bst_node *pres;
@@ -41,6 +71,12 @@ bst_node* bst::find_maximum(bst_node *node)
 	return pres;
 }
 
+/**
+*	Finds the successor of a node in the tree
+*	@param Pointer to the node to which successor
+*	has to be computed.
+*	@return Pointer to the successor node.
+*/
 bst_node* bst::find_successor(bst_node *node)
 {
 	bst_node *pres,*parent;
@@ -58,6 +94,11 @@ bst_node* bst::find_successor(bst_node *node)
 	return parent;
 }
 
+/**
+*	Inserts a new node with value as its elem
+*	@param Value(int) to be inserted
+*	@return Nothing
+*/
 void bst::insert(int value)
 {//if(head!=NULL)printf("insert %d\n",head->element);
 	bst_node *pres,*prev,*new_leaf;
@@ -87,6 +128,11 @@ void bst::insert(int value)
 		prev->right = new_leaf;
 }
 
+/**
+*	Replaces node pointed by a with node pointed by b
+*	@param a, b as explained
+*	@return nothing
+*/
 void bst::replace(bst_node *a,bst_node *b)
 {
 	if(a->parent==NULL)
@@ -99,6 +145,11 @@ void bst::replace(bst_node *a,bst_node *b)
 		b->parent = a->parent;
 }
 
+/**
+*	Deletes the node with value if exists
+*	@param value to be deleted
+*	@return nothing
+*/
 void bst::delete_element(int value)
 {
 	bst_node *pres,*prev,*child_node,*delete_node;
@@ -131,17 +182,29 @@ void bst::delete_element(int value)
 	delete delete_node;
 }
 
+/**
+*	Normal search to know elemnt exists or no
+*	@param value to be searched
+*	@return exists or no
+*/
 bool bst::search(int value)
 {
 	return (search_tree(value) != NULL);
 }
 
+/**
+*	Displays the tree in-order
+*/
 void bst::display()
 {
 	pio(head);
 	printf("\n");
 }
 
+/**
+*	Recursively prints tree in-order
+*	@param pointer to the root node of the sub-tree
+*/
 void bst::pio( bst_node *ptr )//print inorder from a node
 {
 	if( ptr->left != NULL )

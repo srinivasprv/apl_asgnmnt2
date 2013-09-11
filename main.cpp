@@ -1,3 +1,10 @@
+/**
+*	@file main.cpp
+*	@brief main function using ADT.
+*
+*	@author Anil Kumar Chilli, Praveen Srinivas
+*
+*/
 #include "dict.h"
 
 void print_usage()
@@ -41,7 +48,7 @@ int main(int argc,char *argv[])
 	}
 	if(argc == 6)
 	{
-		if(strcpy(argv[1],"-t"))
+		if(strcmp(argv[1],"-t"))
 		{
 			print_usage();
 			exit(0);
@@ -54,13 +61,13 @@ int main(int argc,char *argv[])
 	}
 	if(argc == 7)
 	{
-		if(strcpy(argv[1],"-bst"))
+		if(strcmp(argv[1],"-bst"))
 		{
 			print_usage();
 			exit(0);
 		}
 	
-		if(strcpy(argv[4],"-t"))
+		if(strcmp(argv[4],"-t"))
 		{
 			print_usage();
 			exit(0);

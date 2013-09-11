@@ -1,3 +1,11 @@
+/**
+*       @file rbt.cpp
+*       @brief Contains Definitions for methods of class rbt.
+*
+*       @author Anil Kumar Chilli, Praveen Srinivas
+*
+*/
+
 #include "dict.h"
 
 /*rbt::rbt()
