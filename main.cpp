@@ -43,6 +43,11 @@ int main(int argc,char *argv[])
 
 	if(argc == 3)
 	{
+		if(strcmp(argv[1],"-bst") == 0)//strcpy->strcmp
+		{
+			print_usage();
+			exit(0);
+		}
 		bst_flag = 0;
 		strcpy(populate_file,argv[1]);
 		strcpy(searchfile,argv[2]);
@@ -60,7 +65,12 @@ int main(int argc,char *argv[])
 	}
 	if(argc == 6)
 	{
-		if(strcmp(argv[1],"-t"))
+		if(!strcmp(argv[1],"-bst"))
+		{
+			print_usage();
+			exit(0);
+		}
+		if(strcmp(argv[3],"-t"))
 		{
 			print_usage();
 			exit(0);
@@ -91,6 +101,7 @@ int main(int argc,char *argv[])
 		strcpy(time_output_file,argv[6]);
 	}
 
+printf("%s\n%s\n",populate_file,searchfile);
 	///if bst flag is set create BST object
 	if(bst_flag)
 		obj = new bst();
@@ -98,8 +109,16 @@ int main(int argc,char *argv[])
 	else
 		obj = new rbt();
 
-	obj->PopulateDictionary(populate_file,time_input_file);
-	obj->LocateInDictionary(searchfile,time_output_file);
+	if((argc==3)||(argc==4))
+	{
+		obj->PopulateDictionary(populate_file);
+		obj->LocateInDictionary(searchfile);
+	}
+	else if((argc==6)||(argc==7))
+	{
+		obj->PopulateDictionary(populate_file,time_input_file);
+		obj->LocateInDictionary(searchfile,time_output_file);
+	}
 /*	if((fp= fopen(populate_file,"r"))==NULL)
 	{
 		printf("cannot open file %s\nExiting..\n",populate_file);

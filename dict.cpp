@@ -7,6 +7,8 @@
 */
 
 #include <ctime>
+#include <unistd.h>
+#include <sys/time.h>
 #include "dict.h"
 
 /**
@@ -62,8 +64,9 @@ void dict::PopulateDictionary(char *ipfile,char* timefileinsert)
 {
 	FILE *fp=NULL,*sp=NULL;
 	int temp;
-	time_t timer=time(0);
-	tm *ltm=NULL;
+//	time_t timer=time(0);
+//	tm *ltm=NULL;
+	struct timeval start,end;
 	int init_time,final_time;
 	int total_time;
 	int no_of_elements;
@@ -76,7 +79,7 @@ void dict::PopulateDictionary(char *ipfile,char* timefileinsert)
 
 	if((sp=fopen(timefileinsert,"a"))==NULL)
 	{
-		printf("could not open file %s\nExiting\n",ipfile);
+		printf("could not open file %s\nExiting\n",timefileinsert);
 		exit(0);
 	}
 
@@ -85,11 +88,14 @@ void dict::PopulateDictionary(char *ipfile,char* timefileinsert)
 	while(fscanf(fp,"%d",&temp)!=EOF)
 	{
 		no_of_elements++;
-		ltm=localtime(&timer);
-		init_time = ltm->tm_hour * 60 + ltm->tm_min * 60 + ltm->tm_sec;
+//		ltm=localtime(&timer);
+//		init_time = ltm->tm_hour * 60 + ltm->tm_min * 60 + ltm->tm_sec;
+		gettimeofday(&start,NULL);
 		insert(temp);
-		final_time = ltm->tm_hour * 60 + ltm->tm_min * 60 + ltm->tm_sec;
-		total_time += final_time - init_time;
+		gettimeofday(&end,NULL);
+//		ltm=localtime(&timer);
+//		final_time = ltm->tm_hour * 60 + ltm->tm_min * 60 + ltm->tm_sec;
+		total_time += ((end.tv_sec-start.tv_sec)*1000000) + (end.tv_usec - start.tv_usec);
 //		fprintf(sp,"%d %d\n",no_of_elements,final_time-init_time);
 	}
 	fprintf(sp,"%d %d\n",no_of_elements,total_time);
@@ -106,9 +112,10 @@ void dict::LocateInDictionary(char *ipfile,char* timefileinsert)
 {
 	FILE *fp=NULL,*sp=NULL;
 	int temp;
-	time_t timer=time(0);
-	tm *ltm=NULL;
-	int init_time,final_time;
+//	time_t timer=time(0);
+//	tm *ltm=NULL;
+//	int init_time,final_time;
+	struct timeval start,end;
 	int total_time;
 	int retval;
 	int no_of_elements;
@@ -130,11 +137,14 @@ void dict::LocateInDictionary(char *ipfile,char* timefileinsert)
 	while(fscanf(fp,"%d",&temp)!=EOF)
 	{
 		no_of_elements++;
-		ltm=localtime(&timer);
-		init_time = ltm->tm_hour * 60 + ltm->tm_min * 60 + ltm->tm_sec;
+//		ltm=localtime(&timer);
+//		init_time = ltm->tm_hour * 60 + ltm->tm_min * 60 + ltm->tm_sec;
+		gettimeofday(&start,NULL);
 		retval = search(temp);
-		final_time = ltm->tm_hour * 60 + ltm->tm_min * 60 + ltm->tm_sec;
-		total_time = final_time - init_time;
+		gettimeofday(&end,NULL);
+//		final_time = ltm->tm_hour * 60 + ltm->tm_min * 60 + ltm->tm_sec;
+//		total_time = final_time - init_time;
+		total_time += ((end.tv_sec-start.tv_sec)*1000000) + (end.tv_usec - start.tv_usec);
 //		fprintf(sp,"%d %d\n",no_of_elements,final_time-init_time);
 //		printf("%d %d\n",temp,retval);
 	}

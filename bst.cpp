@@ -127,7 +127,10 @@ void bst::insert(int value)
 		else if((pres->element)<value)
 			pres = pres->right;
 		else
+		{
+			printf("element already exists\n");
 			return;
+		}
 	}
 	
 	new_leaf->parent = prev;
