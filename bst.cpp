@@ -29,6 +29,7 @@ bst_node* bst::search_tree(int value)
 	bst_node *pres;
 
 	pres = head;
+	///search the tree iteratively using bst property
 	while((pres!=NULL)&&(!(pres->element==(value))))
 	{
 		if(pres->element>(value))
@@ -50,6 +51,7 @@ bst_node* bst::find_minimum(bst_node *node)
 	bst_node *pres;
 	pres = node;
 
+	///return left most node in the subtree
 	while((pres->left!=NULL))
 		pres = pres->left;
 	return pres;
@@ -66,6 +68,7 @@ bst_node* bst::find_maximum(bst_node *node)
 	bst_node *pres;
 	pres = node;
 
+	///return the right most node in the sub tree
 	while((pres->right!=NULL))
 		pres = pres->right;
 	return pres;
@@ -82,15 +85,19 @@ bst_node* bst::find_successor(bst_node *node)
 	bst_node *pres,*parent;
 	pres = node;
 
+	///if right sub tree exists return the least elementn in it
 	if(pres->right !=NULL)
 		return find_minimum(pres->right);
 
+	///o/w
 	parent = pres;
+	///iterate till pres is left child or we find the root
 	while((pres!=NULL)&&(pres == parent->right))
 	{
 		pres = parent;
 		parent = parent->parent;
 	}
+	///returns null if iterated till root as successor does not exist
 	return parent;
 }
 
@@ -111,17 +118,23 @@ void bst::insert(int value)
 //	printf("insert2");
 	prev = NULL;
 	pres = head;
+	///iterate over tree to find the node to which new node is child
 	while(pres != NULL)//if->while
 	{
 		prev = pres;//pres=prev
 		if((pres->element)>(value))//paranthesis
 			pres = pres->left;
-		else
+		else if((pres->element)<value)
 			pres = pres->right;
+		else
+			return;
 	}
+	
 	new_leaf->parent = prev;
+	///first node-> point it as root
 	if(prev == NULL)
 		head = new_leaf;
+	///create as left or righ tchild accordingly
 	else if((prev->element)>(value))//paranthesis)
 		prev->left = new_leaf;
 	else
@@ -135,12 +148,16 @@ void bst::insert(int value)
 */
 void bst::replace(bst_node *a,bst_node *b)
 {
+	///if a is root make b as root
 	if(a->parent==NULL)
 		head = b;
+	///if a is left child to its parent, make b as left child to parent of a
 	else if(a == a->parent->left)
 		a->parent->left = b;
+	///same as if case
 	else
 		a->parent->right = b;
+	///update parent of b
 	if(b!=NULL)
 		b->parent = a->parent;
 }
@@ -155,27 +172,37 @@ void bst::delete_element(int value)
 	bst_node *pres,*prev,*child_node,*delete_node;
 	bool flag;
 
+	///search the tree for value
 	delete_node = search_tree(value);
+	///print error if element does not exist
 	if(delete_node == NULL)
 	{
 		printf("element does not exist in tree\n");
 		return;
 	}
 
+	///if left node does not exist replace z with its righ child
 	if(delete_node->left==NULL)
 		replace(delete_node,delete_node->right);
+	///if z does not have right child but has a left child replace left child with z
 	else if(delete_node->right==NULL)
 		replace(delete_node,delete_node->left);
+	///if z have bot children
 	else
 	{
+		///find the least element in right subtree
 		pres = find_minimum(delete_node->right);
+		///if z is not the parent of the least node
 		if(pres->parent != delete_node)//pres->parent == NULL
 		{
+			///remove pres from its place
 			replace(pres,pres->right);
+			///update right pointers in place of delete node
 			pres->right = delete_node->right;
 			pres->right->parent = pres;
 		}
 		replace(delete_node,pres);
+		///update left pointers
 		pres->left = delete_node->left;
 		pres->left->parent = pres;
 	}
@@ -189,6 +216,7 @@ void bst::delete_element(int value)
 */
 bool bst::search(int value)
 {
+	///use search_tree
 	return (search_tree(value) != NULL);
 }
 
@@ -207,9 +235,17 @@ void bst::display()
 */
 void bst::pio( bst_node *ptr )//print inorder from a node
 {
+	if(ptr == NULL)
+	{
+		printf("No elements Exist");
+		return;
+	}
+	///call pio recursively on left
 	if( ptr->left != NULL )
 		pio( ptr->left );
+	///after printing left subtree print current root
 	printf("%d ,",ptr->element);
+	///call pio recursively on right subtree
 	if( ptr->right != NULL )
 		pio( ptr->right );
 }
@@ -222,9 +258,17 @@ void bst::clear()
 
 void bst::clear_pot( bst_node *ptr )//clearing by postorder traversal
 {
+	if(ptr == NULL)
+        {
+                printf("No elements Exist");
+                return;
+        }
+	///clear left subtree recorsively
 	if( ptr->left != NULL )
 		clear_pot( ptr->left );
+	///clear right subtree recursively
 	if( ptr->right != NULL )
 		clear_pot( ptr->right );
+	///delete current root
 	delete ptr;
 }

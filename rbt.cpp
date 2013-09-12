@@ -15,6 +15,9 @@
 	head = tail;
 }*/
 
+/**
+*	Constructor: Initializes root to tail(or nil node)
+*/
 rbt::rbt()
 {
 	tail = new node;
@@ -26,6 +29,11 @@ rbt::rbt()
 	head->parent = tail;
 }
 
+/**
+*	search_tree searches the tree for value
+*	@param value to be searched
+	@return pointer to node with value or tail if value does not exist
+*/
 node* rbt::search_tree(int value)
 {
 	node *pres;
@@ -41,6 +49,12 @@ node* rbt::search_tree(int value)
 	return pres;
 }
 
+/**
+*	Finds the least element of the sub-tree
+*       rooted at node.
+*       @param Pointer to the root of sub-tree
+*       @return pointer to the node with least value
+*/
 node* rbt::find_minimum(node *mynode)
 {
 	node *pres;
@@ -51,6 +65,12 @@ node* rbt::find_minimum(node *mynode)
 	return pres;
 }
 
+/**
+*       Finds the largest element of the sub-tree
+*       rooted at node.
+*       @param Pointer to the root of sub-tree.
+*       @return pointer to the node with largest value.
+*/
 node* rbt::find_maximum(node *mynode)
 {
 	node *pres;
@@ -61,6 +81,12 @@ node* rbt::find_maximum(node *mynode)
 	return pres;
 }
 
+/**
+*       Finds the successor of a node in the tree
+*       @param Pointer to the node to which successor
+*       has to be computed.
+*       @return Pointer to the successor node.
+*/
 node* rbt::find_successor(node *mynode)
 {
 	node *pres,*parent;
@@ -78,7 +104,12 @@ node* rbt::find_successor(node *mynode)
 	return parent;
 }
 
-node* rbt::left_rotation(node *mynode)
+/**
+*	Left rotates the tree around mynode
+*	@param mynode node around which rotation happens
+*	
+*/
+void rbt::left_rotation(node *mynode)
 {
 	node *pres,*rightchild;
 
@@ -98,7 +129,12 @@ node* rbt::left_rotation(node *mynode)
 	pres->parent = rightchild;
 }
 
-node* rbt::right_rotation(node *mynode)
+/**
+*       Right rotates the tree around mynode
+*       @param mynode node around which rotation happens
+*       
+*/
+void rbt::right_rotation(node *mynode)
 {
 	node *pres,*leftchild;
 
@@ -118,6 +154,10 @@ node* rbt::right_rotation(node *mynode)
 	pres->parent = leftchild;
 }
 
+/**
+*	Adjust the tree so that RBT properties are satisfied
+*	@param mynode: the node which breaks the rules
+*/
 void rbt::insert_adjust(node *mynode)
 {
 	node *pres,*uncle;
@@ -172,6 +212,10 @@ void rbt::insert_adjust(node *mynode)
 	head->color = 0;
 }
 
+/**
+*	Inserts a new node into existing RBT
+	@param value: to be inserted
+*/
 void rbt::insert(int value)
 {
 	node *pres,*prev,*new_leaf;
@@ -189,8 +233,10 @@ void rbt::insert(int value)
 		prev = pres;
 		if(pres->element>(value))
 			pres = pres->left;
-		else
+		else if(pres->element < value)
 			pres = pres->right;
+		else
+			return;
 	}
 	new_leaf->parent = prev;
 	if(prev == tail)
@@ -202,6 +248,10 @@ void rbt::insert(int value)
 	insert_adjust(new_leaf);
 }
 
+/**
+*	Replaces node a by b
+*	@param pointers to nodes a nd b
+*/
 void rbt::replace(node *a,node *b)
 {
 	if(a->parent==tail)
@@ -213,6 +263,10 @@ void rbt::replace(node *a,node *b)
 	b->parent = a->parent;
 }
 
+/**
+*	Adjust the tree so that RBT properties are satisfied after Deletion
+*       @param mynode: the node which breaks the rules
+*/
 void rbt::delete_adjust(node *mynode)
 {
 	node *pres,*brother;
@@ -286,6 +340,10 @@ void rbt::delete_adjust(node *mynode)
 	pres->color = 0;
 }
 
+/**
+*	Deletes the node with value 'value'
+*	@param value to be deleted
+*/
 void rbt::delete_element(int value)
 {
 	node *pres,*prev,*child_node,*delete_node;
@@ -336,17 +394,29 @@ void rbt::delete_element(int value)
 	delete delete_node;
 }
 
+/**
+*	Search if a value exists in the tree
+*	@param value: what to search for
+*	@return exists or no
+*/
 bool rbt::search(int value)
 {
 	return (search_tree(value) != tail);//NULL);
 }
 
+/**
+*	Prints the tree in-order
+*/
 void rbt::display()
 {
         pio(head);
         printf("\n");
 }
 
+/**
+*	Reursive method to implement io-order traversal
+*	@param Pointer to the node from which in-order traversal happens
+*/
 void rbt::pio( node *ptr )//print inorder from a node
 {
         if( ptr->left != tail )
@@ -356,12 +426,19 @@ void rbt::pio( node *ptr )//print inorder from a node
         pio( ptr->right );
 }
 
+/**
+*	Clears the tree
+*/
 void rbt::clear()
 {
 	clear_pot(head);
 	head = tail;
 }
 
+/**
+*	clear the nodes recursively in post-order
+*	@param pointer to node from where post-order traversal happens
+*/
 void rbt::clear_pot(node *ptr)
 {
 	if(ptr->left!=NULL)

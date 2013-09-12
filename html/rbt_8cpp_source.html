@@ -41,7 +41,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     </ul>
   </div>
 <h1>rbt.cpp</h1><a href="rbt_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
-<a name="l00009"></a>00009 <span class="preprocessor">#include &quot;<a class="code" href="dict_8h.html" title="Header file containing prototypes for classes bst, rbt.">dict.h</a>&quot;</span>
+<a name="l00009"></a>00009 <span class="preprocessor">#include &quot;<a class="code" href="dict_8h.html" title="Header file containing prototypes for classes dict, bst, rbt.">dict.h</a>&quot;</span>
 <a name="l00010"></a>00010 
 <a name="l00011"></a>00011 <span class="comment">/*rbt::rbt()</span>
 <a name="l00012"></a>00012 <span class="comment">{</span>
@@ -50,351 +50,363 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00015"></a>00015 <span class="comment">        head = tail;</span>
 <a name="l00016"></a>00016 <span class="comment">}*/</span>
 <a name="l00017"></a>00017 
-<a name="l00018"></a>00018 rbt::rbt()
-<a name="l00019"></a>00019 {
-<a name="l00020"></a>00020         <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a> = <span class="keyword">new</span> <a class="code" href="classnode.html">node</a>;
-<a name="l00021"></a>00021         <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 0;
-<a name="l00022"></a>00022 <span class="comment">//      tail-&gt;element = 1000000000000000000;</span>
-<a name="l00023"></a>00023         <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a> = NULL;
-<a name="l00024"></a>00024         <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a> = NULL;
-<a name="l00025"></a>00025         <a class="code" href="classrbt.html#a834432dd6855d239222c49526139ebfc" title="pointer to root of the tree">head</a> = <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>;
-<a name="l00026"></a>00026         <a class="code" href="classrbt.html#a834432dd6855d239222c49526139ebfc" title="pointer to root of the tree">head</a>-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a> = <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>;
-<a name="l00027"></a>00027 }
-<a name="l00028"></a>00028 
-<a name="l00029"></a>00029 <a class="code" href="classnode.html">node</a>* rbt::search_tree(<span class="keywordtype">int</span> value)
-<a name="l00030"></a>00030 {
-<a name="l00031"></a>00031         <a class="code" href="classnode.html">node</a> *pres;
-<a name="l00032"></a>00032 
-<a name="l00033"></a>00033         pres = <a class="code" href="classrbt.html#a834432dd6855d239222c49526139ebfc" title="pointer to root of the tree">head</a>;
-<a name="l00034"></a>00034         <span class="keywordflow">while</span>((pres!=<a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a><span class="comment">/*NULL*/</span>)&amp;&amp;(!(pres-&gt;<a class="code" href="classnode.html#ac630ce0812b82dd2f388db2eb2ca1c4e" title="Value of the node.">element</a>==(value))))
-<a name="l00035"></a>00035         {
-<a name="l00036"></a>00036                 <span class="keywordflow">if</span>(pres-&gt;<a class="code" href="classnode.html#ac630ce0812b82dd2f388db2eb2ca1c4e" title="Value of the node.">element</a>&gt;(value))
-<a name="l00037"></a>00037                         pres = pres-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>;
-<a name="l00038"></a>00038                 <span class="keywordflow">else</span>
-<a name="l00039"></a>00039                         pres = pres-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>;
-<a name="l00040"></a>00040         }
-<a name="l00041"></a>00041         <span class="keywordflow">return</span> pres;
-<a name="l00042"></a>00042 }
-<a name="l00043"></a>00043 
-<a name="l00044"></a>00044 <a class="code" href="classnode.html">node</a>* rbt::find_minimum(<a class="code" href="classnode.html">node</a> *mynode)
-<a name="l00045"></a>00045 {
-<a name="l00046"></a>00046         <a class="code" href="classnode.html">node</a> *pres;
-<a name="l00047"></a>00047         pres = mynode;
-<a name="l00048"></a>00048 
-<a name="l00049"></a>00049         <span class="keywordflow">while</span>((pres-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>!=<a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>))<span class="comment">//NULL))</span>
-<a name="l00050"></a>00050                 pres = pres-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>;
-<a name="l00051"></a>00051         <span class="keywordflow">return</span> pres;
-<a name="l00052"></a>00052 }
-<a name="l00053"></a>00053 
-<a name="l00054"></a>00054 <a class="code" href="classnode.html">node</a>* rbt::find_maximum(<a class="code" href="classnode.html">node</a> *mynode)
-<a name="l00055"></a>00055 {
-<a name="l00056"></a>00056         <a class="code" href="classnode.html">node</a> *pres;
-<a name="l00057"></a>00057         pres = mynode;
-<a name="l00058"></a>00058 
-<a name="l00059"></a>00059         <span class="keywordflow">while</span>((pres-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>!=<a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>))<span class="comment">//NULL))</span>
-<a name="l00060"></a>00060                 pres = pres-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>;
-<a name="l00061"></a>00061         <span class="keywordflow">return</span> pres;
-<a name="l00062"></a>00062 }
-<a name="l00063"></a>00063 
-<a name="l00064"></a>00064 <a class="code" href="classnode.html">node</a>* rbt::find_successor(<a class="code" href="classnode.html">node</a> *mynode)
-<a name="l00065"></a>00065 {
-<a name="l00066"></a>00066         <a class="code" href="classnode.html">node</a> *pres,*parent;
-<a name="l00067"></a>00067         pres = mynode;
-<a name="l00068"></a>00068 
-<a name="l00069"></a>00069         <span class="keywordflow">if</span>(pres-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a> !=<a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>)<span class="comment">//NULL)</span>
-<a name="l00070"></a>00070                 <span class="keywordflow">return</span> find_minimum(pres-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>);
-<a name="l00071"></a>00071 
-<a name="l00072"></a>00072         parent = pres;
-<a name="l00073"></a>00073         <span class="keywordflow">while</span>((pres!=<a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a><span class="comment">/*NULL*/</span>)&amp;&amp;(pres == parent-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>))
-<a name="l00074"></a>00074         {
-<a name="l00075"></a>00075                 pres = parent;
-<a name="l00076"></a>00076                 parent = parent-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>;
-<a name="l00077"></a>00077         }
-<a name="l00078"></a>00078         <span class="keywordflow">return</span> parent;
-<a name="l00079"></a>00079 }
-<a name="l00080"></a>00080 
-<a name="l00081"></a>00081 <a class="code" href="classnode.html">node</a>* rbt::left_rotation(<a class="code" href="classnode.html">node</a> *mynode)
-<a name="l00082"></a>00082 {
-<a name="l00083"></a>00083         <a class="code" href="classnode.html">node</a> *pres,*rightchild;
-<a name="l00084"></a>00084 
-<a name="l00085"></a>00085         pres = mynode;
-<a name="l00086"></a>00086         rightchild = pres-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>;
-<a name="l00087"></a>00087         pres-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a> = rightchild-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>;
-<a name="l00088"></a>00088         <span class="keywordflow">if</span>(rightchild-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a> != <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>)<span class="comment">//null</span>
-<a name="l00089"></a>00089                 rightchild-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a> = pres;
-<a name="l00090"></a>00090         rightchild-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a> = pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>;
-<a name="l00091"></a>00091         <span class="keywordflow">if</span>(pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a> == <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>)<span class="comment">//NULL)</span>
-<a name="l00092"></a>00092                 <a class="code" href="classrbt.html#a834432dd6855d239222c49526139ebfc" title="pointer to root of the tree">head</a> = rightchild;
-<a name="l00093"></a>00093         <span class="keywordflow">else</span> <span class="keywordflow">if</span>(pres == pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>)
-<a name="l00094"></a>00094                 pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a> = rightchild;
-<a name="l00095"></a>00095         <span class="keywordflow">else</span>
-<a name="l00096"></a>00096                 pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a> = rightchild;
-<a name="l00097"></a>00097         rightchild-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a> = pres;
-<a name="l00098"></a>00098         pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a> = rightchild;
-<a name="l00099"></a>00099 }
-<a name="l00100"></a>00100 
-<a name="l00101"></a>00101 <a class="code" href="classnode.html">node</a>* rbt::right_rotation(<a class="code" href="classnode.html">node</a> *mynode)
-<a name="l00102"></a>00102 {
-<a name="l00103"></a>00103         <a class="code" href="classnode.html">node</a> *pres,*leftchild;
-<a name="l00104"></a>00104 
-<a name="l00105"></a>00105         pres = mynode;
-<a name="l00106"></a>00106         leftchild = pres-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>;
-<a name="l00107"></a>00107         pres-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a> = leftchild-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>;
-<a name="l00108"></a>00108         <span class="keywordflow">if</span>(leftchild-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a> != <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>)<span class="comment">//NULL)</span>
-<a name="l00109"></a>00109                 leftchild-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a> = pres;
-<a name="l00110"></a>00110         leftchild-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a> = pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>;
-<a name="l00111"></a>00111         <span class="keywordflow">if</span>(pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a> == <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>)<span class="comment">//NULL)</span>
-<a name="l00112"></a>00112                 <a class="code" href="classrbt.html#a834432dd6855d239222c49526139ebfc" title="pointer to root of the tree">head</a> = leftchild;
-<a name="l00113"></a>00113         <span class="keywordflow">else</span> <span class="keywordflow">if</span>(pres == pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>)
-<a name="l00114"></a>00114                 pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a> = leftchild;
-<a name="l00115"></a>00115         <span class="keywordflow">else</span>
-<a name="l00116"></a>00116                 pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a> = leftchild;
-<a name="l00117"></a>00117         leftchild-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a> = pres;
-<a name="l00118"></a>00118         pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a> = leftchild;
-<a name="l00119"></a>00119 }
-<a name="l00120"></a>00120 
-<a name="l00121"></a>00121 <span class="keywordtype">void</span> rbt::insert_adjust(<a class="code" href="classnode.html">node</a> *mynode)
-<a name="l00122"></a>00122 {
-<a name="l00123"></a>00123         <a class="code" href="classnode.html">node</a> *pres,*uncle;
-<a name="l00124"></a>00124 
-<a name="l00125"></a>00125         pres = mynode;
-<a name="l00126"></a>00126         <span class="keywordflow">while</span>(pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> == 1)
-<a name="l00127"></a>00127         {
-<a name="l00128"></a>00128                 <span class="keywordflow">if</span>(pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a> == pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>)
-<a name="l00129"></a>00129                 {
-<a name="l00130"></a>00130                         uncle = pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>;
-<a name="l00131"></a>00131                         <span class="keywordflow">if</span>(uncle-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> == 1)
-<a name="l00132"></a>00132                         {
-<a name="l00133"></a>00133                                 pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 0;
-<a name="l00134"></a>00134                                 uncle-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 0;
-<a name="l00135"></a>00135                                 pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 1;
-<a name="l00136"></a>00136                                 pres = pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>;
-<a name="l00137"></a>00137                         }
-<a name="l00138"></a>00138                         <span class="keywordflow">else</span>{
-<a name="l00139"></a>00139                                 <span class="keywordflow">if</span>(pres == pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>)
-<a name="l00140"></a>00140                                 {
-<a name="l00141"></a>00141                                         pres = pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>;
-<a name="l00142"></a>00142                                         left_rotation(pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>);
-<a name="l00143"></a>00143                                 }
-<a name="l00144"></a>00144                                 pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 0;
-<a name="l00145"></a>00145                                 pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 1;
-<a name="l00146"></a>00146                                 right_rotation(pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>);
-<a name="l00147"></a>00147                         }
-<a name="l00148"></a>00148                 }
-<a name="l00149"></a>00149                 <span class="keywordflow">else</span>
-<a name="l00150"></a>00150                 {
-<a name="l00151"></a>00151                         uncle = pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>;
-<a name="l00152"></a>00152                         <span class="keywordflow">if</span>(uncle-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> == 1)
-<a name="l00153"></a>00153                         {
-<a name="l00154"></a>00154                                 pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 0;
-<a name="l00155"></a>00155                                 uncle-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 0;
-<a name="l00156"></a>00156                                 pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 1;
-<a name="l00157"></a>00157                                 pres = pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>;
-<a name="l00158"></a>00158                         }
-<a name="l00159"></a>00159                         <span class="keywordflow">else</span>
-<a name="l00160"></a>00160                         {
-<a name="l00161"></a>00161                                  <span class="keywordflow">if</span>(pres == pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>)
-<a name="l00162"></a>00162                                 {
-<a name="l00163"></a>00163                                         pres = pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>;
-<a name="l00164"></a>00164                                         right_rotation(pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>);
-<a name="l00165"></a>00165                                 }
-<a name="l00166"></a>00166                                 pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 0;
-<a name="l00167"></a>00167                                 pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 1;
-<a name="l00168"></a>00168                                 left_rotation(pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>);
-<a name="l00169"></a>00169                         }
-<a name="l00170"></a>00170                 }
-<a name="l00171"></a>00171         }
-<a name="l00172"></a>00172         <a class="code" href="classrbt.html#a834432dd6855d239222c49526139ebfc" title="pointer to root of the tree">head</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 0;
-<a name="l00173"></a>00173 }
-<a name="l00174"></a>00174 
-<a name="l00175"></a><a class="code" href="classrbt.html#afb8a2c19bece1acbd6125bb6eb84d136">00175</a> <span class="keywordtype">void</span> <a class="code" href="classrbt.html#afb8a2c19bece1acbd6125bb6eb84d136" title="inserct element into dictionary">rbt::insert</a>(<span class="keywordtype">int</span> value)
-<a name="l00176"></a>00176 {
-<a name="l00177"></a>00177         <a class="code" href="classnode.html">node</a> *pres,*prev,*new_leaf;
-<a name="l00178"></a>00178         
-<a name="l00179"></a>00179         new_leaf = <span class="keyword">new</span> <a class="code" href="classnode.html">node</a>();
-<a name="l00180"></a>00180         new_leaf-&gt;<a class="code" href="classnode.html#ac630ce0812b82dd2f388db2eb2ca1c4e" title="Value of the node.">element</a>=(value);
-<a name="l00181"></a>00181         <span class="comment">//new_leaf-&gt;left = head-&gt;right = tail;</span>
-<a name="l00182"></a>00182         new_leaf-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a> = new_leaf-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a> = <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>;
-<a name="l00183"></a>00183         new_leaf-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 1;
-<a name="l00184"></a>00184 
-<a name="l00185"></a>00185         pres = <a class="code" href="classrbt.html#a834432dd6855d239222c49526139ebfc" title="pointer to root of the tree">head</a>;
-<a name="l00186"></a>00186         prev = <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>;
-<a name="l00187"></a>00187         <span class="keywordflow">while</span>(pres != <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>)
-<a name="l00188"></a>00188         {
-<a name="l00189"></a>00189                 prev = pres;
-<a name="l00190"></a>00190                 <span class="keywordflow">if</span>(pres-&gt;<a class="code" href="classnode.html#ac630ce0812b82dd2f388db2eb2ca1c4e" title="Value of the node.">element</a>&gt;(value))
-<a name="l00191"></a>00191                         pres = pres-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>;
-<a name="l00192"></a>00192                 <span class="keywordflow">else</span>
-<a name="l00193"></a>00193                         pres = pres-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>;
-<a name="l00194"></a>00194         }
-<a name="l00195"></a>00195         new_leaf-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a> = prev;
-<a name="l00196"></a>00196         <span class="keywordflow">if</span>(prev == <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>)
-<a name="l00197"></a>00197                 <a class="code" href="classrbt.html#a834432dd6855d239222c49526139ebfc" title="pointer to root of the tree">head</a> = new_leaf;
-<a name="l00198"></a>00198         <span class="keywordflow">else</span> <span class="keywordflow">if</span>(prev-&gt;<a class="code" href="classnode.html#ac630ce0812b82dd2f388db2eb2ca1c4e" title="Value of the node.">element</a>&gt;(value))
-<a name="l00199"></a>00199                 prev-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a> = new_leaf;
-<a name="l00200"></a>00200         <span class="keywordflow">else</span>
-<a name="l00201"></a>00201                 prev-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a> = new_leaf;<span class="comment">//printf(&quot;%d\n&quot;,value);</span>
-<a name="l00202"></a>00202         insert_adjust(new_leaf);
-<a name="l00203"></a>00203 }
-<a name="l00204"></a>00204 
-<a name="l00205"></a>00205 <span class="keywordtype">void</span> rbt::replace(<a class="code" href="classnode.html">node</a> *a,<a class="code" href="classnode.html">node</a> *b)
-<a name="l00206"></a>00206 {
-<a name="l00207"></a>00207         <span class="keywordflow">if</span>(a-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>==<a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>)
-<a name="l00208"></a>00208                 <a class="code" href="classrbt.html#a834432dd6855d239222c49526139ebfc" title="pointer to root of the tree">head</a> = b;
-<a name="l00209"></a>00209         <span class="keywordflow">else</span> <span class="keywordflow">if</span>(a == a-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>)
-<a name="l00210"></a>00210                 a-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a> = b;
-<a name="l00211"></a>00211         <span class="keywordflow">else</span>
-<a name="l00212"></a>00212                 a-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a> = b;
-<a name="l00213"></a>00213         b-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a> = a-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>;
-<a name="l00214"></a>00214 }
-<a name="l00215"></a>00215 
-<a name="l00216"></a>00216 <span class="keywordtype">void</span> rbt::delete_adjust(<a class="code" href="classnode.html">node</a> *mynode)
-<a name="l00217"></a>00217 {
-<a name="l00218"></a>00218         <a class="code" href="classnode.html">node</a> *pres,*brother;
-<a name="l00219"></a>00219 
-<a name="l00220"></a>00220         pres = mynode;
-<a name="l00221"></a>00221         <span class="keywordflow">while</span>((pres!=<a class="code" href="classrbt.html#a834432dd6855d239222c49526139ebfc" title="pointer to root of the tree">head</a>) &amp;&amp; (pres-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> == 0))
-<a name="l00222"></a>00222         {
-<a name="l00223"></a>00223                 <span class="keywordflow">if</span>(pres == pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>)
-<a name="l00224"></a>00224                 {
-<a name="l00225"></a>00225                         brother = pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>;
-<a name="l00226"></a>00226                         <span class="keywordflow">if</span>(brother-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> == 1)
-<a name="l00227"></a>00227                         {
-<a name="l00228"></a>00228                                 brother-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 0;
-<a name="l00229"></a>00229                                 pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 1;
-<a name="l00230"></a>00230                                 left_rotation(pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>);
-<a name="l00231"></a>00231                                 brother = pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>;
-<a name="l00232"></a>00232                         }
-<a name="l00233"></a>00233                         <span class="keywordflow">if</span>((brother-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> == 0)&amp;&amp;(brother-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> == 0))
-<a name="l00234"></a>00234                         {
-<a name="l00235"></a>00235                                 brother-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 1;
-<a name="l00236"></a>00236                                 pres = pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>;
-<a name="l00237"></a>00237                         }
-<a name="l00238"></a>00238                         <span class="keywordflow">else</span>
-<a name="l00239"></a>00239                         {
-<a name="l00240"></a>00240                                 <span class="keywordflow">if</span>(brother-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> == 0)
-<a name="l00241"></a>00241                                 {
-<a name="l00242"></a>00242                                         brother-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 0;
-<a name="l00243"></a>00243                                         brother-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 1;
-<a name="l00244"></a>00244                                         right_rotation(brother);
-<a name="l00245"></a>00245                                         brother = pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>;
-<a name="l00246"></a>00246                                 }
-<a name="l00247"></a>00247                                 brother-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a>;
-<a name="l00248"></a>00248                                 pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 0;
-<a name="l00249"></a>00249                                 brother-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 0;
-<a name="l00250"></a>00250                                 left_rotation(pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>);
-<a name="l00251"></a>00251                                 pres = <a class="code" href="classrbt.html#a834432dd6855d239222c49526139ebfc" title="pointer to root of the tree">head</a>;
-<a name="l00252"></a>00252                         }
-<a name="l00253"></a>00253                 }
-<a name="l00254"></a>00254                 <span class="keywordflow">else</span>
-<a name="l00255"></a>00255                 {
-<a name="l00256"></a>00256                         brother = pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>;
-<a name="l00257"></a>00257                         <span class="keywordflow">if</span>(brother-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> == 1)
-<a name="l00258"></a>00258                         {
-<a name="l00259"></a>00259                                 brother-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 0;
-<a name="l00260"></a>00260                                 pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 1;
-<a name="l00261"></a>00261                                 right_rotation(pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>);
-<a name="l00262"></a>00262                                 brother = pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>;
-<a name="l00263"></a>00263                         }
-<a name="l00264"></a>00264                         <span class="keywordflow">if</span>((brother-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> == 0)&amp;&amp;(brother-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> == 0))
-<a name="l00265"></a>00265                         {
-<a name="l00266"></a>00266                                 brother-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 1;
-<a name="l00267"></a>00267                                 pres = pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>;
-<a name="l00268"></a>00268                         }
-<a name="l00269"></a>00269                         <span class="keywordflow">else</span>
-<a name="l00270"></a>00270                         {
-<a name="l00271"></a>00271                                 <span class="keywordflow">if</span>(brother-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> == 0)
-<a name="l00272"></a>00272                                 {
-<a name="l00273"></a>00273                                         brother-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 0;
-<a name="l00274"></a>00274                                         brother-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 1;
-<a name="l00275"></a>00275                                         left_rotation(brother);
-<a name="l00276"></a>00276                                         brother = pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>;
-<a name="l00277"></a>00277                                 }
-<a name="l00278"></a>00278                                 brother-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a>;
-<a name="l00279"></a>00279                                 pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 0;
-<a name="l00280"></a>00280                                 brother-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 0;
-<a name="l00281"></a>00281                                 right_rotation(pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>);
-<a name="l00282"></a>00282                                 pres = <a class="code" href="classrbt.html#a834432dd6855d239222c49526139ebfc" title="pointer to root of the tree">head</a>;
-<a name="l00283"></a>00283                         }
-<a name="l00284"></a>00284                 }
-<a name="l00285"></a>00285         }
-<a name="l00286"></a>00286         pres-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 0;
-<a name="l00287"></a>00287 }
-<a name="l00288"></a>00288 
-<a name="l00289"></a><a class="code" href="classrbt.html#a333301bb0e6a6fda723dae45d026250f">00289</a> <span class="keywordtype">void</span> <a class="code" href="classrbt.html#a333301bb0e6a6fda723dae45d026250f" title="delete element from dictianary">rbt::delete_element</a>(<span class="keywordtype">int</span> value)
-<a name="l00290"></a>00290 {
-<a name="l00291"></a>00291         <a class="code" href="classnode.html">node</a> *pres,*prev,*child_node,*delete_node;
-<a name="l00292"></a>00292         <span class="keywordtype">bool</span> flag;
-<a name="l00293"></a>00293 
-<a name="l00294"></a>00294         delete_node = search_tree(value);
-<a name="l00295"></a>00295         <span class="keywordflow">if</span>(delete_node == <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>)
-<a name="l00296"></a>00296         {
-<a name="l00297"></a>00297                 printf(<span class="stringliteral">&quot;element does not exist in tree\n&quot;</span>);
-<a name="l00298"></a>00298                 <span class="keywordflow">return</span>;
-<a name="l00299"></a>00299         }
-<a name="l00300"></a>00300 
-<a name="l00301"></a>00301         pres = delete_node;
-<a name="l00302"></a>00302         pres-&gt;<a class="code" href="classnode.html#a457a66c9b1e46d4743c4b9e395463dc9" title="orig colour: used while delete_fix">orig_color</a> = pres-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a>;
-<a name="l00303"></a>00303         <span class="keywordflow">if</span>(delete_node-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>==<a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>)
-<a name="l00304"></a>00304         {
-<a name="l00305"></a>00305                 child_node = delete_node-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>;
-<a name="l00306"></a>00306                 replace(delete_node,delete_node-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>);
-<a name="l00307"></a>00307         }
-<a name="l00308"></a>00308         <span class="keywordflow">else</span> <span class="keywordflow">if</span>(delete_node-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>==<a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>)<span class="comment">//NULL)</span>
-<a name="l00309"></a>00309         {
-<a name="l00310"></a>00310                 child_node = delete_node-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>;
-<a name="l00311"></a>00311                 replace(delete_node,delete_node-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>);
-<a name="l00312"></a>00312         }
-<a name="l00313"></a>00313         <span class="keywordflow">else</span>
-<a name="l00314"></a>00314         {
-<a name="l00315"></a>00315                 pres = find_minimum(delete_node-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>);
-<a name="l00316"></a>00316                 pres-&gt;<a class="code" href="classnode.html#a457a66c9b1e46d4743c4b9e395463dc9" title="orig colour: used while delete_fix">orig_color</a> = pres-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a>;
-<a name="l00317"></a>00317                 child_node = pres-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>;
-<a name="l00318"></a>00318                 <span class="keywordflow">if</span>(pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a> == delete_node)
-<a name="l00319"></a>00319                 {
-<a name="l00320"></a>00320                         child_node-&gt; parent = pres;
-<a name="l00321"></a>00321                 }
-<a name="l00322"></a>00322                 <span class="keywordflow">else</span>
-<a name="l00323"></a>00323                 {
-<a name="l00324"></a>00324                         replace(pres,pres-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>);
-<a name="l00325"></a>00325                         pres-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a> = delete_node-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>;
-<a name="l00326"></a>00326                         pres-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a> = pres;
-<a name="l00327"></a>00327                 }
-<a name="l00328"></a>00328                 replace(delete_node,pres);
-<a name="l00329"></a>00329                 pres-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a> = delete_node-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>;
-<a name="l00330"></a>00330                 pres-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a> = pres;
-<a name="l00331"></a>00331                 pres-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = delete_node-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a>;
-<a name="l00332"></a>00332         }
-<a name="l00333"></a>00333         <span class="keywordflow">if</span>(pres-&gt;<a class="code" href="classnode.html#a457a66c9b1e46d4743c4b9e395463dc9" title="orig colour: used while delete_fix">orig_color</a> == 0)
-<a name="l00334"></a>00334                 delete_adjust(child_node);
-<a name="l00335"></a>00335                 
-<a name="l00336"></a>00336         <span class="keyword">delete</span> delete_node;
-<a name="l00337"></a>00337 }
-<a name="l00338"></a>00338 
-<a name="l00339"></a><a class="code" href="classrbt.html#adb57baacc9709e8a24db7aaac6a4c61d">00339</a> <span class="keywordtype">bool</span> <a class="code" href="classrbt.html#adb57baacc9709e8a24db7aaac6a4c61d" title="search and return whether elment exists or no">rbt::search</a>(<span class="keywordtype">int</span> value)
-<a name="l00340"></a>00340 {
-<a name="l00341"></a>00341         <span class="keywordflow">return</span> (search_tree(value) != <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>);<span class="comment">//NULL);</span>
-<a name="l00342"></a>00342 }
-<a name="l00343"></a>00343 
-<a name="l00344"></a><a class="code" href="classrbt.html#a09c5e5641bf5725eb8a9a6750933dd0a">00344</a> <span class="keywordtype">void</span> <a class="code" href="classrbt.html#a09c5e5641bf5725eb8a9a6750933dd0a" title="Displays the dictinary in ascending order.">rbt::display</a>()
-<a name="l00345"></a>00345 {
-<a name="l00346"></a>00346         pio(<a class="code" href="classrbt.html#a834432dd6855d239222c49526139ebfc" title="pointer to root of the tree">head</a>);
-<a name="l00347"></a>00347         printf(<span class="stringliteral">&quot;\n&quot;</span>);
-<a name="l00348"></a>00348 }
-<a name="l00349"></a>00349 
-<a name="l00350"></a>00350 <span class="keywordtype">void</span> rbt::pio( <a class="code" href="classnode.html">node</a> *ptr )<span class="comment">//print inorder from a node</span>
-<a name="l00351"></a>00351 {
-<a name="l00352"></a>00352         <span class="keywordflow">if</span>( ptr-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a> != <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a> )
-<a name="l00353"></a>00353         pio( ptr-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a> );
-<a name="l00354"></a>00354         printf(<span class="stringliteral">&quot;%d %d,&quot;</span>,ptr-&gt;<a class="code" href="classnode.html#ac630ce0812b82dd2f388db2eb2ca1c4e" title="Value of the node.">element</a>,ptr-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a>);
-<a name="l00355"></a>00355         <span class="keywordflow">if</span>( ptr-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a> != <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a> )
-<a name="l00356"></a>00356         pio( ptr-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a> );
-<a name="l00357"></a>00357 }
+<a name="l00021"></a><a class="code" href="classrbt.html#a500444c05c96476153d8232513215f2c">00021</a> <a class="code" href="classrbt.html#a500444c05c96476153d8232513215f2c">rbt::rbt</a>()
+<a name="l00022"></a>00022 {
+<a name="l00023"></a>00023         <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a> = <span class="keyword">new</span> <a class="code" href="classnode.html">node</a>;
+<a name="l00024"></a>00024         <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 0;
+<a name="l00025"></a>00025 <span class="comment">//      tail-&gt;element = 1000000000000000000;</span>
+<a name="l00026"></a>00026         <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a> = NULL;
+<a name="l00027"></a>00027         <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a> = NULL;
+<a name="l00028"></a>00028         <a class="code" href="classrbt.html#a834432dd6855d239222c49526139ebfc" title="pointer to root of the tree">head</a> = <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>;
+<a name="l00029"></a>00029         <a class="code" href="classrbt.html#a834432dd6855d239222c49526139ebfc" title="pointer to root of the tree">head</a>-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a> = <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>;
+<a name="l00030"></a>00030 }
+<a name="l00031"></a>00031 
+<a name="l00037"></a><a class="code" href="classrbt.html#a3713ec18abcaecf957547f21657ebc3a">00037</a> <a class="code" href="classnode.html">node</a>* <a class="code" href="classrbt.html#a3713ec18abcaecf957547f21657ebc3a">rbt::search_tree</a>(<span class="keywordtype">int</span> value)
+<a name="l00038"></a>00038 {
+<a name="l00039"></a>00039         <a class="code" href="classnode.html">node</a> *pres;
+<a name="l00040"></a>00040 
+<a name="l00041"></a>00041         pres = <a class="code" href="classrbt.html#a834432dd6855d239222c49526139ebfc" title="pointer to root of the tree">head</a>;
+<a name="l00042"></a>00042         <span class="keywordflow">while</span>((pres!=<a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a><span class="comment">/*NULL*/</span>)&amp;&amp;(!(pres-&gt;<a class="code" href="classnode.html#ac630ce0812b82dd2f388db2eb2ca1c4e" title="Value of the node.">element</a>==(value))))
+<a name="l00043"></a>00043         {
+<a name="l00044"></a>00044                 <span class="keywordflow">if</span>(pres-&gt;<a class="code" href="classnode.html#ac630ce0812b82dd2f388db2eb2ca1c4e" title="Value of the node.">element</a>&gt;(value))
+<a name="l00045"></a>00045                         pres = pres-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>;
+<a name="l00046"></a>00046                 <span class="keywordflow">else</span>
+<a name="l00047"></a>00047                         pres = pres-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>;
+<a name="l00048"></a>00048         }
+<a name="l00049"></a>00049         <span class="keywordflow">return</span> pres;
+<a name="l00050"></a>00050 }
+<a name="l00051"></a>00051 
+<a name="l00058"></a><a class="code" href="classrbt.html#a25c20070ca7c2af8d775c9f8cb0a69b0">00058</a> <a class="code" href="classnode.html">node</a>* <a class="code" href="classrbt.html#a25c20070ca7c2af8d775c9f8cb0a69b0">rbt::find_minimum</a>(<a class="code" href="classnode.html">node</a> *mynode)
+<a name="l00059"></a>00059 {
+<a name="l00060"></a>00060         <a class="code" href="classnode.html">node</a> *pres;
+<a name="l00061"></a>00061         pres = mynode;
+<a name="l00062"></a>00062 
+<a name="l00063"></a>00063         <span class="keywordflow">while</span>((pres-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>!=<a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>))<span class="comment">//NULL))</span>
+<a name="l00064"></a>00064                 pres = pres-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>;
+<a name="l00065"></a>00065         <span class="keywordflow">return</span> pres;
+<a name="l00066"></a>00066 }
+<a name="l00067"></a>00067 
+<a name="l00074"></a><a class="code" href="classrbt.html#a398790ba2f3fd7cb10dad3e6538f4e38">00074</a> <a class="code" href="classnode.html">node</a>* <a class="code" href="classrbt.html#a398790ba2f3fd7cb10dad3e6538f4e38">rbt::find_maximum</a>(<a class="code" href="classnode.html">node</a> *mynode)
+<a name="l00075"></a>00075 {
+<a name="l00076"></a>00076         <a class="code" href="classnode.html">node</a> *pres;
+<a name="l00077"></a>00077         pres = mynode;
+<a name="l00078"></a>00078 
+<a name="l00079"></a>00079         <span class="keywordflow">while</span>((pres-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>!=<a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>))<span class="comment">//NULL))</span>
+<a name="l00080"></a>00080                 pres = pres-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>;
+<a name="l00081"></a>00081         <span class="keywordflow">return</span> pres;
+<a name="l00082"></a>00082 }
+<a name="l00083"></a>00083 
+<a name="l00090"></a><a class="code" href="classrbt.html#a139fd8f6946346738eebeb32ec4ddd4f">00090</a> <a class="code" href="classnode.html">node</a>* <a class="code" href="classrbt.html#a139fd8f6946346738eebeb32ec4ddd4f">rbt::find_successor</a>(<a class="code" href="classnode.html">node</a> *mynode)
+<a name="l00091"></a>00091 {
+<a name="l00092"></a>00092         <a class="code" href="classnode.html">node</a> *pres,*parent;
+<a name="l00093"></a>00093         pres = mynode;
+<a name="l00094"></a>00094 
+<a name="l00095"></a>00095         <span class="keywordflow">if</span>(pres-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a> !=<a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>)<span class="comment">//NULL)</span>
+<a name="l00096"></a>00096                 <span class="keywordflow">return</span> <a class="code" href="classrbt.html#a25c20070ca7c2af8d775c9f8cb0a69b0">find_minimum</a>(pres-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>);
+<a name="l00097"></a>00097 
+<a name="l00098"></a>00098         parent = pres;
+<a name="l00099"></a>00099         <span class="keywordflow">while</span>((pres!=<a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a><span class="comment">/*NULL*/</span>)&amp;&amp;(pres == parent-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>))
+<a name="l00100"></a>00100         {
+<a name="l00101"></a>00101                 pres = parent;
+<a name="l00102"></a>00102                 parent = parent-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>;
+<a name="l00103"></a>00103         }
+<a name="l00104"></a>00104         <span class="keywordflow">return</span> parent;
+<a name="l00105"></a>00105 }
+<a name="l00106"></a>00106 
+<a name="l00112"></a><a class="code" href="classrbt.html#aa968041302b094dd50f3347054008409">00112</a> <span class="keywordtype">void</span> <a class="code" href="classrbt.html#aa968041302b094dd50f3347054008409">rbt::left_rotation</a>(<a class="code" href="classnode.html">node</a> *mynode)
+<a name="l00113"></a>00113 {
+<a name="l00114"></a>00114         <a class="code" href="classnode.html">node</a> *pres,*rightchild;
+<a name="l00115"></a>00115 
+<a name="l00116"></a>00116         pres = mynode;
+<a name="l00117"></a>00117         rightchild = pres-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>;
+<a name="l00118"></a>00118         pres-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a> = rightchild-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>;
+<a name="l00119"></a>00119         <span class="keywordflow">if</span>(rightchild-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a> != <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>)<span class="comment">//null</span>
+<a name="l00120"></a>00120                 rightchild-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a> = pres;
+<a name="l00121"></a>00121         rightchild-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a> = pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>;
+<a name="l00122"></a>00122         <span class="keywordflow">if</span>(pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a> == <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>)<span class="comment">//NULL)</span>
+<a name="l00123"></a>00123                 <a class="code" href="classrbt.html#a834432dd6855d239222c49526139ebfc" title="pointer to root of the tree">head</a> = rightchild;
+<a name="l00124"></a>00124         <span class="keywordflow">else</span> <span class="keywordflow">if</span>(pres == pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>)
+<a name="l00125"></a>00125                 pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a> = rightchild;
+<a name="l00126"></a>00126         <span class="keywordflow">else</span>
+<a name="l00127"></a>00127                 pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a> = rightchild;
+<a name="l00128"></a>00128         rightchild-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a> = pres;
+<a name="l00129"></a>00129         pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a> = rightchild;
+<a name="l00130"></a>00130 }
+<a name="l00131"></a>00131 
+<a name="l00137"></a><a class="code" href="classrbt.html#a085de88c34ce43307e1950cd4874c047">00137</a> <span class="keywordtype">void</span> <a class="code" href="classrbt.html#a085de88c34ce43307e1950cd4874c047">rbt::right_rotation</a>(<a class="code" href="classnode.html">node</a> *mynode)
+<a name="l00138"></a>00138 {
+<a name="l00139"></a>00139         <a class="code" href="classnode.html">node</a> *pres,*leftchild;
+<a name="l00140"></a>00140 
+<a name="l00141"></a>00141         pres = mynode;
+<a name="l00142"></a>00142         leftchild = pres-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>;
+<a name="l00143"></a>00143         pres-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a> = leftchild-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>;
+<a name="l00144"></a>00144         <span class="keywordflow">if</span>(leftchild-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a> != <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>)<span class="comment">//NULL)</span>
+<a name="l00145"></a>00145                 leftchild-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a> = pres;
+<a name="l00146"></a>00146         leftchild-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a> = pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>;
+<a name="l00147"></a>00147         <span class="keywordflow">if</span>(pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a> == <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>)<span class="comment">//NULL)</span>
+<a name="l00148"></a>00148                 <a class="code" href="classrbt.html#a834432dd6855d239222c49526139ebfc" title="pointer to root of the tree">head</a> = leftchild;
+<a name="l00149"></a>00149         <span class="keywordflow">else</span> <span class="keywordflow">if</span>(pres == pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>)
+<a name="l00150"></a>00150                 pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a> = leftchild;
+<a name="l00151"></a>00151         <span class="keywordflow">else</span>
+<a name="l00152"></a>00152                 pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a> = leftchild;
+<a name="l00153"></a>00153         leftchild-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a> = pres;
+<a name="l00154"></a>00154         pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a> = leftchild;
+<a name="l00155"></a>00155 }
+<a name="l00156"></a>00156 
+<a name="l00161"></a><a class="code" href="classrbt.html#a554867cded6b51d57cfb99166d9baa4c">00161</a> <span class="keywordtype">void</span> <a class="code" href="classrbt.html#a554867cded6b51d57cfb99166d9baa4c">rbt::insert_adjust</a>(<a class="code" href="classnode.html">node</a> *mynode)
+<a name="l00162"></a>00162 {
+<a name="l00163"></a>00163         <a class="code" href="classnode.html">node</a> *pres,*uncle;
+<a name="l00164"></a>00164 
+<a name="l00165"></a>00165         pres = mynode;
+<a name="l00166"></a>00166         <span class="keywordflow">while</span>(pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> == 1)
+<a name="l00167"></a>00167         {
+<a name="l00168"></a>00168                 <span class="keywordflow">if</span>(pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a> == pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>)
+<a name="l00169"></a>00169                 {
+<a name="l00170"></a>00170                         uncle = pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>;
+<a name="l00171"></a>00171                         <span class="keywordflow">if</span>(uncle-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> == 1)
+<a name="l00172"></a>00172                         {
+<a name="l00173"></a>00173                                 pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 0;
+<a name="l00174"></a>00174                                 uncle-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 0;
+<a name="l00175"></a>00175                                 pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 1;
+<a name="l00176"></a>00176                                 pres = pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>;
+<a name="l00177"></a>00177                         }
+<a name="l00178"></a>00178                         <span class="keywordflow">else</span>{
+<a name="l00179"></a>00179                                 <span class="keywordflow">if</span>(pres == pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>)
+<a name="l00180"></a>00180                                 {
+<a name="l00181"></a>00181                                         pres = pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>;
+<a name="l00182"></a>00182                                         <a class="code" href="classrbt.html#aa968041302b094dd50f3347054008409">left_rotation</a>(pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>);
+<a name="l00183"></a>00183                                 }
+<a name="l00184"></a>00184                                 pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 0;
+<a name="l00185"></a>00185                                 pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 1;
+<a name="l00186"></a>00186                                 <a class="code" href="classrbt.html#a085de88c34ce43307e1950cd4874c047">right_rotation</a>(pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>);
+<a name="l00187"></a>00187                         }
+<a name="l00188"></a>00188                 }
+<a name="l00189"></a>00189                 <span class="keywordflow">else</span>
+<a name="l00190"></a>00190                 {
+<a name="l00191"></a>00191                         uncle = pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>;
+<a name="l00192"></a>00192                         <span class="keywordflow">if</span>(uncle-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> == 1)
+<a name="l00193"></a>00193                         {
+<a name="l00194"></a>00194                                 pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 0;
+<a name="l00195"></a>00195                                 uncle-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 0;
+<a name="l00196"></a>00196                                 pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 1;
+<a name="l00197"></a>00197                                 pres = pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>;
+<a name="l00198"></a>00198                         }
+<a name="l00199"></a>00199                         <span class="keywordflow">else</span>
+<a name="l00200"></a>00200                         {
+<a name="l00201"></a>00201                                  <span class="keywordflow">if</span>(pres == pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>)
+<a name="l00202"></a>00202                                 {
+<a name="l00203"></a>00203                                         pres = pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>;
+<a name="l00204"></a>00204                                         <a class="code" href="classrbt.html#a085de88c34ce43307e1950cd4874c047">right_rotation</a>(pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>);
+<a name="l00205"></a>00205                                 }
+<a name="l00206"></a>00206                                 pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 0;
+<a name="l00207"></a>00207                                 pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 1;
+<a name="l00208"></a>00208                                 <a class="code" href="classrbt.html#aa968041302b094dd50f3347054008409">left_rotation</a>(pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>);
+<a name="l00209"></a>00209                         }
+<a name="l00210"></a>00210                 }
+<a name="l00211"></a>00211         }
+<a name="l00212"></a>00212         <a class="code" href="classrbt.html#a834432dd6855d239222c49526139ebfc" title="pointer to root of the tree">head</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 0;
+<a name="l00213"></a>00213 }
+<a name="l00214"></a>00214 
+<a name="l00219"></a><a class="code" href="classrbt.html#afb8a2c19bece1acbd6125bb6eb84d136">00219</a> <span class="keywordtype">void</span> <a class="code" href="classrbt.html#afb8a2c19bece1acbd6125bb6eb84d136">rbt::insert</a>(<span class="keywordtype">int</span> value)
+<a name="l00220"></a>00220 {
+<a name="l00221"></a>00221         <a class="code" href="classnode.html">node</a> *pres,*prev,*new_leaf;
+<a name="l00222"></a>00222         
+<a name="l00223"></a>00223         new_leaf = <span class="keyword">new</span> <a class="code" href="classnode.html">node</a>();
+<a name="l00224"></a>00224         new_leaf-&gt;<a class="code" href="classnode.html#ac630ce0812b82dd2f388db2eb2ca1c4e" title="Value of the node.">element</a>=(value);
+<a name="l00225"></a>00225         <span class="comment">//new_leaf-&gt;left = head-&gt;right = tail;</span>
+<a name="l00226"></a>00226         new_leaf-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a> = new_leaf-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a> = <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>;
+<a name="l00227"></a>00227         new_leaf-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 1;
+<a name="l00228"></a>00228 
+<a name="l00229"></a>00229         pres = <a class="code" href="classrbt.html#a834432dd6855d239222c49526139ebfc" title="pointer to root of the tree">head</a>;
+<a name="l00230"></a>00230         prev = <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>;
+<a name="l00231"></a>00231         <span class="keywordflow">while</span>(pres != <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>)
+<a name="l00232"></a>00232         {
+<a name="l00233"></a>00233                 prev = pres;
+<a name="l00234"></a>00234                 <span class="keywordflow">if</span>(pres-&gt;<a class="code" href="classnode.html#ac630ce0812b82dd2f388db2eb2ca1c4e" title="Value of the node.">element</a>&gt;(value))
+<a name="l00235"></a>00235                         pres = pres-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>;
+<a name="l00236"></a>00236                 <span class="keywordflow">else</span> <span class="keywordflow">if</span>(pres-&gt;<a class="code" href="classnode.html#ac630ce0812b82dd2f388db2eb2ca1c4e" title="Value of the node.">element</a> &lt; value)
+<a name="l00237"></a>00237                         pres = pres-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>;
+<a name="l00238"></a>00238                 <span class="keywordflow">else</span>
+<a name="l00239"></a>00239                         <span class="keywordflow">return</span>;
+<a name="l00240"></a>00240         }
+<a name="l00241"></a>00241         new_leaf-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a> = prev;
+<a name="l00242"></a>00242         <span class="keywordflow">if</span>(prev == <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>)
+<a name="l00243"></a>00243                 <a class="code" href="classrbt.html#a834432dd6855d239222c49526139ebfc" title="pointer to root of the tree">head</a> = new_leaf;
+<a name="l00244"></a>00244         <span class="keywordflow">else</span> <span class="keywordflow">if</span>(prev-&gt;<a class="code" href="classnode.html#ac630ce0812b82dd2f388db2eb2ca1c4e" title="Value of the node.">element</a>&gt;(value))
+<a name="l00245"></a>00245                 prev-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a> = new_leaf;
+<a name="l00246"></a>00246         <span class="keywordflow">else</span>
+<a name="l00247"></a>00247                 prev-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a> = new_leaf;<span class="comment">//printf(&quot;%d\n&quot;,value);</span>
+<a name="l00248"></a>00248         <a class="code" href="classrbt.html#a554867cded6b51d57cfb99166d9baa4c">insert_adjust</a>(new_leaf);
+<a name="l00249"></a>00249 }
+<a name="l00250"></a>00250 
+<a name="l00255"></a><a class="code" href="classrbt.html#aaa3cf42976f57953eaeb969f10016d55">00255</a> <span class="keywordtype">void</span> <a class="code" href="classrbt.html#aaa3cf42976f57953eaeb969f10016d55">rbt::replace</a>(<a class="code" href="classnode.html">node</a> *a,<a class="code" href="classnode.html">node</a> *b)
+<a name="l00256"></a>00256 {
+<a name="l00257"></a>00257         <span class="keywordflow">if</span>(a-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>==<a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>)
+<a name="l00258"></a>00258                 <a class="code" href="classrbt.html#a834432dd6855d239222c49526139ebfc" title="pointer to root of the tree">head</a> = b;
+<a name="l00259"></a>00259         <span class="keywordflow">else</span> <span class="keywordflow">if</span>(a == a-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>)
+<a name="l00260"></a>00260                 a-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a> = b;
+<a name="l00261"></a>00261         <span class="keywordflow">else</span>
+<a name="l00262"></a>00262                 a-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a> = b;
+<a name="l00263"></a>00263         b-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a> = a-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>;
+<a name="l00264"></a>00264 }
+<a name="l00265"></a>00265 
+<a name="l00270"></a><a class="code" href="classrbt.html#a89da57953680e17c1388b4ed36dc7585">00270</a> <span class="keywordtype">void</span> <a class="code" href="classrbt.html#a89da57953680e17c1388b4ed36dc7585">rbt::delete_adjust</a>(<a class="code" href="classnode.html">node</a> *mynode)
+<a name="l00271"></a>00271 {
+<a name="l00272"></a>00272         <a class="code" href="classnode.html">node</a> *pres,*brother;
+<a name="l00273"></a>00273 
+<a name="l00274"></a>00274         pres = mynode;
+<a name="l00275"></a>00275         <span class="keywordflow">while</span>((pres!=<a class="code" href="classrbt.html#a834432dd6855d239222c49526139ebfc" title="pointer to root of the tree">head</a>) &amp;&amp; (pres-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> == 0))
+<a name="l00276"></a>00276         {
+<a name="l00277"></a>00277                 <span class="keywordflow">if</span>(pres == pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>)
+<a name="l00278"></a>00278                 {
+<a name="l00279"></a>00279                         brother = pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>;
+<a name="l00280"></a>00280                         <span class="keywordflow">if</span>(brother-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> == 1)
+<a name="l00281"></a>00281                         {
+<a name="l00282"></a>00282                                 brother-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 0;
+<a name="l00283"></a>00283                                 pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 1;
+<a name="l00284"></a>00284                                 <a class="code" href="classrbt.html#aa968041302b094dd50f3347054008409">left_rotation</a>(pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>);
+<a name="l00285"></a>00285                                 brother = pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>;
+<a name="l00286"></a>00286                         }
+<a name="l00287"></a>00287                         <span class="keywordflow">if</span>((brother-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> == 0)&amp;&amp;(brother-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> == 0))
+<a name="l00288"></a>00288                         {
+<a name="l00289"></a>00289                                 brother-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 1;
+<a name="l00290"></a>00290                                 pres = pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>;
+<a name="l00291"></a>00291                         }
+<a name="l00292"></a>00292                         <span class="keywordflow">else</span>
+<a name="l00293"></a>00293                         {
+<a name="l00294"></a>00294                                 <span class="keywordflow">if</span>(brother-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> == 0)
+<a name="l00295"></a>00295                                 {
+<a name="l00296"></a>00296                                         brother-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 0;
+<a name="l00297"></a>00297                                         brother-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 1;
+<a name="l00298"></a>00298                                         <a class="code" href="classrbt.html#a085de88c34ce43307e1950cd4874c047">right_rotation</a>(brother);
+<a name="l00299"></a>00299                                         brother = pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>;
+<a name="l00300"></a>00300                                 }
+<a name="l00301"></a>00301                                 brother-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a>;
+<a name="l00302"></a>00302                                 pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 0;
+<a name="l00303"></a>00303                                 brother-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 0;
+<a name="l00304"></a>00304                                 <a class="code" href="classrbt.html#aa968041302b094dd50f3347054008409">left_rotation</a>(pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>);
+<a name="l00305"></a>00305                                 pres = <a class="code" href="classrbt.html#a834432dd6855d239222c49526139ebfc" title="pointer to root of the tree">head</a>;
+<a name="l00306"></a>00306                         }
+<a name="l00307"></a>00307                 }
+<a name="l00308"></a>00308                 <span class="keywordflow">else</span>
+<a name="l00309"></a>00309                 {
+<a name="l00310"></a>00310                         brother = pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>;
+<a name="l00311"></a>00311                         <span class="keywordflow">if</span>(brother-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> == 1)
+<a name="l00312"></a>00312                         {
+<a name="l00313"></a>00313                                 brother-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 0;
+<a name="l00314"></a>00314                                 pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 1;
+<a name="l00315"></a>00315                                 <a class="code" href="classrbt.html#a085de88c34ce43307e1950cd4874c047">right_rotation</a>(pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>);
+<a name="l00316"></a>00316                                 brother = pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>;
+<a name="l00317"></a>00317                         }
+<a name="l00318"></a>00318                         <span class="keywordflow">if</span>((brother-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> == 0)&amp;&amp;(brother-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> == 0))
+<a name="l00319"></a>00319                         {
+<a name="l00320"></a>00320                                 brother-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 1;
+<a name="l00321"></a>00321                                 pres = pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>;
+<a name="l00322"></a>00322                         }
+<a name="l00323"></a>00323                         <span class="keywordflow">else</span>
+<a name="l00324"></a>00324                         {
+<a name="l00325"></a>00325                                 <span class="keywordflow">if</span>(brother-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> == 0)
+<a name="l00326"></a>00326                                 {
+<a name="l00327"></a>00327                                         brother-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 0;
+<a name="l00328"></a>00328                                         brother-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 1;
+<a name="l00329"></a>00329                                         <a class="code" href="classrbt.html#aa968041302b094dd50f3347054008409">left_rotation</a>(brother);
+<a name="l00330"></a>00330                                         brother = pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>;
+<a name="l00331"></a>00331                                 }
+<a name="l00332"></a>00332                                 brother-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a>;
+<a name="l00333"></a>00333                                 pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 0;
+<a name="l00334"></a>00334                                 brother-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 0;
+<a name="l00335"></a>00335                                 <a class="code" href="classrbt.html#a085de88c34ce43307e1950cd4874c047">right_rotation</a>(pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a>);
+<a name="l00336"></a>00336                                 pres = <a class="code" href="classrbt.html#a834432dd6855d239222c49526139ebfc" title="pointer to root of the tree">head</a>;
+<a name="l00337"></a>00337                         }
+<a name="l00338"></a>00338                 }
+<a name="l00339"></a>00339         }
+<a name="l00340"></a>00340         pres-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = 0;
+<a name="l00341"></a>00341 }
+<a name="l00342"></a>00342 
+<a name="l00347"></a><a class="code" href="classrbt.html#a333301bb0e6a6fda723dae45d026250f">00347</a> <span class="keywordtype">void</span> <a class="code" href="classrbt.html#a333301bb0e6a6fda723dae45d026250f">rbt::delete_element</a>(<span class="keywordtype">int</span> value)
+<a name="l00348"></a>00348 {
+<a name="l00349"></a>00349         <a class="code" href="classnode.html">node</a> *pres,*prev,*child_node,*delete_node;
+<a name="l00350"></a>00350         <span class="keywordtype">bool</span> flag;
+<a name="l00351"></a>00351 
+<a name="l00352"></a>00352         delete_node = <a class="code" href="classrbt.html#a3713ec18abcaecf957547f21657ebc3a">search_tree</a>(value);
+<a name="l00353"></a>00353         <span class="keywordflow">if</span>(delete_node == <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>)
+<a name="l00354"></a>00354         {
+<a name="l00355"></a>00355                 printf(<span class="stringliteral">&quot;element does not exist in tree\n&quot;</span>);
+<a name="l00356"></a>00356                 <span class="keywordflow">return</span>;
+<a name="l00357"></a>00357         }
 <a name="l00358"></a>00358 
-<a name="l00359"></a>00359 
-<a name="l00360"></a><a class="code" href="classrbt.html#a3363b8d8a51f012357b740fd992c6ec3">00360</a> <span class="keywordtype">void</span> <a class="code" href="classrbt.html#a3363b8d8a51f012357b740fd992c6ec3" title="clears the dictionary">rbt::clear</a>()
-<a name="l00361"></a>00361 {
-<a name="l00362"></a>00362 }
+<a name="l00359"></a>00359         pres = delete_node;
+<a name="l00360"></a>00360         pres-&gt;<a class="code" href="classnode.html#a457a66c9b1e46d4743c4b9e395463dc9" title="orig colour: used while delete_fix">orig_color</a> = pres-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a>;
+<a name="l00361"></a>00361         <span class="keywordflow">if</span>(delete_node-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>==<a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>)
+<a name="l00362"></a>00362         {
+<a name="l00363"></a>00363                 child_node = delete_node-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>;
+<a name="l00364"></a>00364                 <a class="code" href="classrbt.html#aaa3cf42976f57953eaeb969f10016d55">replace</a>(delete_node,delete_node-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>);
+<a name="l00365"></a>00365         }
+<a name="l00366"></a>00366         <span class="keywordflow">else</span> <span class="keywordflow">if</span>(delete_node-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>==<a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>)<span class="comment">//NULL)</span>
+<a name="l00367"></a>00367         {
+<a name="l00368"></a>00368                 child_node = delete_node-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>;
+<a name="l00369"></a>00369                 <a class="code" href="classrbt.html#aaa3cf42976f57953eaeb969f10016d55">replace</a>(delete_node,delete_node-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>);
+<a name="l00370"></a>00370         }
+<a name="l00371"></a>00371         <span class="keywordflow">else</span>
+<a name="l00372"></a>00372         {
+<a name="l00373"></a>00373                 pres = <a class="code" href="classrbt.html#a25c20070ca7c2af8d775c9f8cb0a69b0">find_minimum</a>(delete_node-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>);
+<a name="l00374"></a>00374                 pres-&gt;<a class="code" href="classnode.html#a457a66c9b1e46d4743c4b9e395463dc9" title="orig colour: used while delete_fix">orig_color</a> = pres-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a>;
+<a name="l00375"></a>00375                 child_node = pres-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>;
+<a name="l00376"></a>00376                 <span class="keywordflow">if</span>(pres-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a> == delete_node)
+<a name="l00377"></a>00377                 {
+<a name="l00378"></a>00378                         child_node-&gt; parent = pres;
+<a name="l00379"></a>00379                 }
+<a name="l00380"></a>00380                 <span class="keywordflow">else</span>
+<a name="l00381"></a>00381                 {
+<a name="l00382"></a>00382                         <a class="code" href="classrbt.html#aaa3cf42976f57953eaeb969f10016d55">replace</a>(pres,pres-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>);
+<a name="l00383"></a>00383                         pres-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a> = delete_node-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>;
+<a name="l00384"></a>00384                         pres-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a> = pres;
+<a name="l00385"></a>00385                 }
+<a name="l00386"></a>00386                 <a class="code" href="classrbt.html#aaa3cf42976f57953eaeb969f10016d55">replace</a>(delete_node,pres);
+<a name="l00387"></a>00387                 pres-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a> = delete_node-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>;
+<a name="l00388"></a>00388                 pres-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>-&gt;<a class="code" href="classnode.html#a5e88137f1d0e2f7a940bccf4c3d3a4d3" title="pointer to parent">parent</a> = pres;
+<a name="l00389"></a>00389                 pres-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a> = delete_node-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a>;
+<a name="l00390"></a>00390         }
+<a name="l00391"></a>00391         <span class="keywordflow">if</span>(pres-&gt;<a class="code" href="classnode.html#a457a66c9b1e46d4743c4b9e395463dc9" title="orig colour: used while delete_fix">orig_color</a> == 0)
+<a name="l00392"></a>00392                 <a class="code" href="classrbt.html#a89da57953680e17c1388b4ed36dc7585">delete_adjust</a>(child_node);
+<a name="l00393"></a>00393                 
+<a name="l00394"></a>00394         <span class="keyword">delete</span> delete_node;
+<a name="l00395"></a>00395 }
+<a name="l00396"></a>00396 
+<a name="l00402"></a><a class="code" href="classrbt.html#adb57baacc9709e8a24db7aaac6a4c61d">00402</a> <span class="keywordtype">bool</span> <a class="code" href="classrbt.html#adb57baacc9709e8a24db7aaac6a4c61d">rbt::search</a>(<span class="keywordtype">int</span> value)
+<a name="l00403"></a>00403 {
+<a name="l00404"></a>00404         <span class="keywordflow">return</span> (<a class="code" href="classrbt.html#a3713ec18abcaecf957547f21657ebc3a">search_tree</a>(value) != <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>);<span class="comment">//NULL);</span>
+<a name="l00405"></a>00405 }
+<a name="l00406"></a>00406 
+<a name="l00410"></a><a class="code" href="classrbt.html#a09c5e5641bf5725eb8a9a6750933dd0a">00410</a> <span class="keywordtype">void</span> <a class="code" href="classrbt.html#a09c5e5641bf5725eb8a9a6750933dd0a">rbt::display</a>()
+<a name="l00411"></a>00411 {
+<a name="l00412"></a>00412         <a class="code" href="classrbt.html#a6cdc8fa6a13194bab64f7c3155fecd86">pio</a>(<a class="code" href="classrbt.html#a834432dd6855d239222c49526139ebfc" title="pointer to root of the tree">head</a>);
+<a name="l00413"></a>00413         printf(<span class="stringliteral">&quot;\n&quot;</span>);
+<a name="l00414"></a>00414 }
+<a name="l00415"></a>00415 
+<a name="l00420"></a><a class="code" href="classrbt.html#a6cdc8fa6a13194bab64f7c3155fecd86">00420</a> <span class="keywordtype">void</span> <a class="code" href="classrbt.html#a6cdc8fa6a13194bab64f7c3155fecd86">rbt::pio</a>( <a class="code" href="classnode.html">node</a> *ptr )<span class="comment">//print inorder from a node</span>
+<a name="l00421"></a>00421 {
+<a name="l00422"></a>00422         <span class="keywordflow">if</span>( ptr-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a> != <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a> )
+<a name="l00423"></a>00423         <a class="code" href="classrbt.html#a6cdc8fa6a13194bab64f7c3155fecd86">pio</a>( ptr-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a> );
+<a name="l00424"></a>00424         printf(<span class="stringliteral">&quot;%d %d,&quot;</span>,ptr-&gt;<a class="code" href="classnode.html#ac630ce0812b82dd2f388db2eb2ca1c4e" title="Value of the node.">element</a>,ptr-&gt;<a class="code" href="classnode.html#ad3d475f22776899938bbca39b65f2414" title="colour of node">color</a>);
+<a name="l00425"></a>00425         <span class="keywordflow">if</span>( ptr-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a> != <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a> )
+<a name="l00426"></a>00426         <a class="code" href="classrbt.html#a6cdc8fa6a13194bab64f7c3155fecd86">pio</a>( ptr-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a> );
+<a name="l00427"></a>00427 }
+<a name="l00428"></a>00428 
+<a name="l00432"></a><a class="code" href="classrbt.html#a3363b8d8a51f012357b740fd992c6ec3">00432</a> <span class="keywordtype">void</span> <a class="code" href="classrbt.html#a3363b8d8a51f012357b740fd992c6ec3">rbt::clear</a>()
+<a name="l00433"></a>00433 {
+<a name="l00434"></a>00434         <a class="code" href="classrbt.html#a52d3a5bf5b1ff9f69f62fd63af606e52">clear_pot</a>(<a class="code" href="classrbt.html#a834432dd6855d239222c49526139ebfc" title="pointer to root of the tree">head</a>);
+<a name="l00435"></a>00435         <a class="code" href="classrbt.html#a834432dd6855d239222c49526139ebfc" title="pointer to root of the tree">head</a> = <a class="code" href="classrbt.html#ad3fbfab6ae75681cc67458e1a7b34cc7" title="pointer to nil node">tail</a>;
+<a name="l00436"></a>00436 }
+<a name="l00437"></a>00437 
+<a name="l00442"></a><a class="code" href="classrbt.html#a52d3a5bf5b1ff9f69f62fd63af606e52">00442</a> <span class="keywordtype">void</span> <a class="code" href="classrbt.html#a52d3a5bf5b1ff9f69f62fd63af606e52">rbt::clear_pot</a>(<a class="code" href="classnode.html">node</a> *ptr)
+<a name="l00443"></a>00443 {
+<a name="l00444"></a>00444         <span class="keywordflow">if</span>(ptr-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>!=NULL)
+<a name="l00445"></a>00445                 <a class="code" href="classrbt.html#a52d3a5bf5b1ff9f69f62fd63af606e52">clear_pot</a>(ptr-&gt;<a class="code" href="classnode.html#a7cbff55ff448f557223f79299056e9b1" title="pointer to left child">left</a>);
+<a name="l00446"></a>00446         <span class="keywordflow">if</span>(ptr-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>!=NULL)
+<a name="l00447"></a>00447                 <a class="code" href="classrbt.html#a52d3a5bf5b1ff9f69f62fd63af606e52">clear_pot</a>(ptr-&gt;<a class="code" href="classnode.html#abdc86d4c8604c481752953af3235fc47" title="pointer to right child">right</a>);
+<a name="l00448"></a>00448         <span class="keyword">delete</span> ptr;
+<a name="l00449"></a>00449 }
 </pre></div></div>
 <!--- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -410,7 +422,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Mon Sep 9 19:52:54 2013 by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Thu Sep 12 10:32:59 2013 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

@@ -101,8 +101,8 @@ class rbt :public dict
 		void pio(node *ptr);
 		node* find_maximum(node *value);
 		node* find_successor(node *value);
-		node* left_rotation(node *mynode);
-		node* right_rotation(node *mynode);
+		void left_rotation(node *mynode);
+		void right_rotation(node *mynode);
 		void insert_adjust(node *node);
 		void delete_adjust(node *node);
 		void replace(node *a,node *b);

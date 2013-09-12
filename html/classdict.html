@@ -63,10 +63,10 @@ Inheritance diagram for dict:</div>
 <tr><td colspan="2"><h2>Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="addd95fb502a9a1708b66420d9db4afaa"></a><!-- doxytag: member="dict::search" ref="addd95fb502a9a1708b66420d9db4afaa" args="(int value)=0" -->
 virtual bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdict.html#addd95fb502a9a1708b66420d9db4afaa">search</a> (int value)=0</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">search and return whether elment exists or no <br/></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">search and return yes or no whether elment exists or not <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aea8b7615fe4244e538bf63d2d6d51629"></a><!-- doxytag: member="dict::insert" ref="aea8b7615fe4244e538bf63d2d6d51629" args="(int value)=0" -->
 virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdict.html#aea8b7615fe4244e538bf63d2d6d51629">insert</a> (int value)=0</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">inserct element into dictionary <br/></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">insert element into dictionary <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a46ae8308fc0a709bbb9b7f92d65ae81c"></a><!-- doxytag: member="dict::delete_element" ref="a46ae8308fc0a709bbb9b7f92d65ae81c" args="(int value)=0" -->
 virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdict.html#a46ae8308fc0a709bbb9b7f92d65ae81c">delete_element</a> (int value)=0</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">delete element from dictianary <br/></td></tr>
@@ -76,13 +76,26 @@ virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae071c27414485af35e0ff72f552c82b3"></a><!-- doxytag: member="dict::display" ref="ae071c27414485af35e0ff72f552c82b3" args="()=0" -->
 virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdict.html#ae071c27414485af35e0ff72f552c82b3">display</a> ()=0</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Displays the dictinary in ascending order. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac1021bab9f425250aa0b9de403904479"></a><!-- doxytag: member="dict::PopulateDictionary" ref="ac1021bab9f425250aa0b9de403904479" args="(char *ipfile)" -->
+void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdict.html#ac1021bab9f425250aa0b9de403904479">PopulateDictionary</a> (char *ipfile)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Populate the dictinary with initial set. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa3e9c9f7369b6c196e97fdf9adaa6301"></a><!-- doxytag: member="dict::LocateInDictionary" ref="aa3e9c9f7369b6c196e97fdf9adaa6301" args="(char *ipfile)" -->
+void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdict.html#aa3e9c9f7369b6c196e97fdf9adaa6301">LocateInDictionary</a> (char *ipfile)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">search the dictinary with initial set <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac7ac5df543dfa0ece6668ead0a7f7f07"></a><!-- doxytag: member="dict::PopulateDictionary" ref="ac7ac5df543dfa0ece6668ead0a7f7f07" args="(char *ipfile, char *timefileinsert)" -->
+void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdict.html#ac7ac5df543dfa0ece6668ead0a7f7f07">PopulateDictionary</a> (char *ipfile, char *timefileinsert)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Populate the dictinary with initial set. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9d97e3e345bef83e33f8f696d1f4dc08"></a><!-- doxytag: member="dict::LocateInDictionary" ref="a9d97e3e345bef83e33f8f696d1f4dc08" args="(char *ipfile, char *timefileinsert)" -->
+void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdict.html#a9d97e3e345bef83e33f8f696d1f4dc08">LocateInDictionary</a> (char *ipfile, char *timefileinsert)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">search the dictinary with initial set <br/></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <p>Base class dictionary </p>
 
 <p>Definition at line <a class="el" href="dict_8h_source.html#l00019">19</a> of file <a class="el" href="dict_8h_source.html">dict.h</a>.</p>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li><a class="el" href="dict_8h_source.html">dict.h</a></li>
+<li><a class="el" href="dict_8cpp_source.html">dict.cpp</a></li>
 </ul>
 </div>
 <!--- window showing the filter options -->
@@ -99,7 +112,7 @@ virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 </iframe>
 </div>
 
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Mon Sep 9 19:52:54 2013 by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Thu Sep 12 10:33:00 2013 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>
